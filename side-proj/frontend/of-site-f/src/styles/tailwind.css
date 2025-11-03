@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/* 네 커스텀 레이어는 그대로 사용해도 됨 */
+@layer base {
+  html, body, #root {
+    height: 100%;
+    background: theme('colors.brand.bg');
+    color: theme('colors.brand.text');
+  }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center px-4 py-2 rounded-button transition; }
+  .btn-primary { @apply btn bg-brand-primary text-white hover:opacity-90; }
+  .btn-outline { @apply btn border border-brand-line text-brand-text bg-white hover:bg-brand-bg; }
+  .chip { @apply inline-flex items-center gap-1 px-3 py-1 rounded-chip bg-brand-sky/10 text-sm text-brand-text; }
+  .card { @apply bg-white border border-brand-line rounded-card p-4 shadow-sm; }
+  .link { @apply text-brand-primary hover:underline; }
+}
+

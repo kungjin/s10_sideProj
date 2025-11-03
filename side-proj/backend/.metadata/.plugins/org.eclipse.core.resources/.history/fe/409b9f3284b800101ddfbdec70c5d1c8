@@ -1,0 +1,3 @@
+spring.application.name=of-site
+
+server.port=8095
