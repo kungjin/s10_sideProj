@@ -1,20 +1,50 @@
+/* ===== Tailwind v4 entry ===== */
 @import "tailwindcss";
 
-/* 네 커스텀 레이어는 그대로 사용해도 됨 */
-@layer base {
-  html, body, #root {
-    height: 100%;
-    background: theme('colors.brand.bg');
-    color: theme('colors.brand.text');
-  }
+/* ===== Brand tokens (v4 @theme) ===== */
+@theme {
+  --color-primary: #1D4ED8;
+  --color-sky: #38BDF8;
+  --color-accent: #FACC15;
+  --color-surface: #FFFFFF;
+  --color-background: #F8FAFC;
+  --color-ink: #0F172A;
+  --color-subink: #64748B;
+  --color-line: #E2E8F0;
+
+  --radius-card: 20px;
+  --radius-button: 14px;
+
+  --shadow-subtle: 0 6px 20px rgba(2, 6, 23, 0.06);
 }
 
-@layer components {
-  .btn { @apply inline-flex items-center justify-center px-4 py-2 rounded-button transition; }
-  .btn-primary { @apply btn bg-brand-primary text-white hover:opacity-90; }
-  .btn-outline { @apply btn border border-brand-line text-brand-text bg-white hover:bg-brand-bg; }
-  .chip { @apply inline-flex items-center gap-1 px-3 py-1 rounded-chip bg-brand-sky/10 text-sm text-brand-text; }
-  .card { @apply bg-white border border-brand-line rounded-card p-4 shadow-sm; }
-  .link { @apply text-brand-primary hover:underline; }
+/* ===== Base ===== */
+:root {
+  background: var(--color-background);
+  color: var(--color-ink);
+  font-family: Inter, Pretendard, system-ui, -apple-system, sans-serif;
 }
+html, body, #root { height: 100%; }
 
+/* ===== Components ===== */
+/* v4에선 @apply로 유틸리티만 묶는 건 OK (커스텀 클래스를 @apply로 또 묶는 건 지양) */
+
+.btn { @apply text-sm px-4 py-2 rounded-button transition border border-transparent; }
+.btn-primary { @apply bg-primary text-white hover:opacity-90 shadow-subtle; }
+.btn-ghost { @apply bg-white border border-line hover:shadow-subtle; }
+
+.card { @apply bg-surface border border-line rounded-card p-6; }
+.card-tight { @apply bg-surface border border-line rounded-card p-4; }
+
+.badge { @apply inline-flex items-center text-xs px-2.5 py-1 rounded-full border border-line bg-white; }
+
+/* Utilities */
+.text-subink { color: var(--color-subink); }
+.bg-surface { background-color: var(--color-surface); }
+.bg-primary { background-color: var(--color-primary); }
+.bg-sky { background-color: var(--color-sky); }
+.bg-accent { background-color: var(--color-accent); }
+.border-line { border-color: var(--color-line); }
+.rounded-card { border-radius: var(--radius-card); }
+.rounded-button { border-radius: var(--radius-button); }
+.shadow-subtle { box-shadow: var(--shadow-subtle); }
