@@ -7,7 +7,7 @@ export default defineConfig({
     // 백엔드 붙일 때만 사용. (개발 중엔 useMock이라 호출 안 됨)
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: "http://127.0.0.1:8095",
         changeOrigin: true,
       },
     },
