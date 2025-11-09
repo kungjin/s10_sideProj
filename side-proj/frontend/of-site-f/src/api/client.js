@@ -2,25 +2,21 @@ import axios from "axios";
 
 const client = axios.create({
   baseURL: "http://127.0.0.1:8095/api",
-  timeout: 10000,
+  timeout: 60000, // ⬆ 60s
+  headers: { Accept: "application/json" },
 });
 
-client.interceptors.request.use((config) => {
-  console.log("[REQ]", config.method?.toUpperCase(), config.baseURL + config.url, config.params);
-  return config;
-});
+// (선택) 아주 간단한 재시도 1~2회
 client.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    // AxiosError 상세 보기
-    console.error("[API ERROR] AxiosError", {
-      code: err.code,
-      message: err.message,
-      url: err.config?.baseURL + err.config?.url,
-      status: err.response?.status,
-      data: err.response?.data,
-    });
-    return Promise.reject(err);
+  res => res,
+  async err => {
+    const cfg = err.config;
+    if (!cfg || cfg.__retry) throw err;
+    if (err.code === "ECONNABORTED" || err.message?.includes("timeout")) {
+      cfg.__retry = true;
+      return client(cfg); // 1회 재시도
+    }
+    throw err;
   }
 );
 

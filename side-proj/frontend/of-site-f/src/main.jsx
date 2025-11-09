@@ -5,11 +5,11 @@ import "./styles/tailwind.css";
 import RoutesConfig from "./RoutesConfig.jsx"; 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <RoutesConfig />
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 

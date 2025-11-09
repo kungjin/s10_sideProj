@@ -1,67 +1,79 @@
+// src/pages/AuctionDetail.jsx
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
 import { getAuctionById } from "../api/auctions";
 import Card from "../components/Card";
 import Badge from "../components/Badge";
-import Button from "../components/Button";
 
 export default function AuctionDetail() {
   const { id } = useParams();
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  useEffect(()=>{
-    (async ()=>{
+  useEffect(() => {
+    const controller = new AbortController();
+    let isMounted = true;
+
+    (async () => {
       setLoading(true);
+      setError(null);
+
       try {
-        const res = await getAuctionById(id);
-        setData(res);
+        const res = await getAuctionById(id, { signal: controller.signal });
+        if (isMounted) setData(res);
+      } catch (e) {
+        if (e.code === "ERR_CANCELED") {
+          console.log("[AuctionDetail] 요청 취소됨");
+        } else {
+          console.error("[AuctionDetail] 불러오기 실패:", e);
+          if (isMounted) setError(e);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     })();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, [id]);
 
-  if (loading) return <div className="max-w-6xl mx-auto px-5 py-10">불러오는 중…</div>;
-  if (!data) return <div className="max-w-6xl mx-auto px-5 py-10">데이터 없음</div>;
+  if (loading) return <Card>불러오는 중...</Card>;
+  if (error) return <Card>에러 발생: {String(error.message)}</Card>;
+  if (!data) return <Card>데이터 없음</Card>;
 
+  // 데이터가 존재할 경우 렌더링
   return (
-    <div className="max-w-6xl mx-auto px-5 py-10 grid lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-2 space-y-4">
-        <Card>
-          <h2 className="text-2xl font-bold">{data.title}</h2>
-          <div className="mt-2 text-subink">{data.address}</div>
-          <div className="mt-3 flex items-center gap-2">
-            <Badge tone="info">{data.category}</Badge>
-            <Badge tone={new Date(data.endDate) - Date.now() < 1000*60*60*24*3 ? "danger" : "info"}>
-              {new Date(data.endDate).toLocaleDateString()} 마감
-            </Badge>
-          </div>
-          <p className="mt-4 text-sm text-subink leading-6">{data.description}</p>
-        </Card>
+    <section className="max-w-4xl mx-auto px-5 py-12">
+      <h1 className="text-3xl font-bold mb-3">{data.title}</h1>
+      <div className="flex items-center gap-2 text-sm text-subink mb-6">
+        <Badge tone="info">{data.category}</Badge>
+        <span>{data.status}</span>
+      </div>
 
-        <Card>
-          <h3 className="font-semibold mb-2">상세 정보</h3>
-          <ul className="text-sm grid sm:grid-cols-2 gap-2">
-            <li>최저입찰가: <span className="font-semibold">{data.minBid.toLocaleString()}원</span></li>
-            <li>감정가: <span className="font-semibold">{data.appraised.toLocaleString()}원</span></li>
-            <li>보증금: <span className="font-semibold">{data.deposit.toLocaleString()}원</span></li>
-            <li>면적: <span className="font-semibold">{data.area}</span></li>
-            <li>물건번호: <span className="font-semibold">{data.id}</span></li>
+      <div className="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 className="font-semibold mb-2">기본 정보</h3>
+          <ul className="text-sm leading-6">
+            <li>공매번호: {data.id}</li>
+            <li>주소: {data.address || "-"}</li>
+            <li>최저입찰가: {data.minPrice?.toLocaleString()}원</li>
+            <li>입찰 시작일: {new Date(data.beginDate).toLocaleString("ko-KR")}</li>
+            <li>입찰 마감일: {new Date(data.endDate).toLocaleString("ko-KR")}</li>
           </ul>
-        </Card>
-      </div>
+        </div>
 
-      <div className="space-y-4">
-        <Card>
-          <h4 className="font-semibold mb-2">입찰 진행</h4>
-          <div className="text-sm text-subink">Onbid 연동 준비 중입니다.</div>
-          <div className="mt-3 flex gap-2">
-            <Button className="flex-1">알림 설정</Button>
-            <Link to="/auctions" className="btn btn-ghost flex-1 text-center">목록</Link>
-          </div>
-        </Card>
+        <div>
+          <h3 className="font-semibold mb-2">상태</h3>
+          <p className="text-sm">
+            현재 상태: <strong>{data.status || "정보 없음"}</strong>
+          </p>
+          <p className="mt-2 text-sm text-subink">조회수: {data.views || 0} / 입찰수: {data.bids || 0}</p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
+

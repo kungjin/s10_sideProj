@@ -1,59 +1,77 @@
 package com.of.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
+
 
 @Service
 @RequiredArgsConstructor
 public class PublicDataService {
 
+    @Qualifier("publicDataClient")      // 네가 쓰던 Bean 그대로 사용
     private final WebClient webClient;
 
     @Value("${public.api.base-url}")
-    private String baseUrl;
+    private String baseUrl;             // 풀 URL
 
     @Value("${public.api.service-key.decoded}")
-    private String serviceKeyDecoded;
+    private String serviceKey;          // 단일 키 (encoded/decoded 구분 없음)
 
-    private String encodedKey() {
-        return URLEncoder.encode(serviceKeyDecoded, StandardCharsets.UTF_8);
+    /** 이미 퍼센트 인코딩처럼 보이면 true */
+    private boolean looksEncoded(String s) {
+        return s != null && s.matches(".*%[0-9a-fA-F]{2}.*");
     }
-
-    /**
-     * 1) 원본 XML 문자열 그대로 전달 (프록시 용도)
-     *    - 프론트에서 XML 그대로 보고싶을 때
-     */
+    
+    
+    /** XML 원문 프록시 */
     public String fetchRawXml(Map<String, String> params) {
-        String encodedKey = encodedKey();
-        WebClient.RequestHeadersUriSpec<?> spec = webClient.get();
-        WebClient.RequestHeadersSpec<?> req = spec.uri(uriBuilder -> {
-            var b = uriBuilder
-                    .path(baseUrl)          // baseUrl에 경로가 포함되면 path 그대로 사용
-                    .queryParam("serviceKey", encodedKey);
-            // 추가 파라미터(페이지 등)
-            if (params != null) {
-                params.forEach((k, v) -> {
-                    if (v != null && !v.isBlank()) b.queryParam(k, v);
-                });
-            }
-            return b.build();
-        });
-        return req.retrieve().bodyToMono(String.class).block();
+        boolean alreadyEncoded = looksEncoded(serviceKey);
+
+        UriComponentsBuilder ub = UriComponentsBuilder
+                .fromUriString(baseUrl)
+                .queryParam("serviceKey", serviceKey);
+
+        if (params != null) {
+            params.forEach((k, v) -> {
+                if (v != null && !v.isBlank()) ub.queryParam(k, v);
+            });
+        }
+
+        // alreadyEncoded=true면 serviceKey를 다시 인코딩하지 않음
+        String url = ub.build(alreadyEncoded).toUriString();
+
+        return webClient.get()
+                .uri(url)                 // ★ 절대 URL로 호출 (path로 안 넣음)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
 
-    /**
-     * 2) XML → JSON (문자열) 변환 전달
-     *    - 빠르게 JSON으로 프론트 콘솔에서 확인하고 싶을 때
-     */
+    /** XML → JSON 문자열 */
     public String fetchAsJson(Map<String, String> params) {
-        String xml = fetchRawXml(params);
-        return com.of.util.XmlJsonConverter.xmlStringToJsonString(xml);
+        final String xml = fetchRawXml(params);
+
+        if (xml == null || xml.isBlank()) {
+            throw new RuntimeException("Upstream 응답 없음(빈 XML)");
+        }
+
+        // ★ 여기서 ‘<resultCode>00</resultCode>’ 강제 실패 제거
+        //   → 공공데이터 측에서 구조가 달리 올 때도 일단 JSON으로 변환해 프론트에서 확인 가능
+        try {
+            return com.of.util.XmlJsonConverter.xmlStringToJsonString(xml);
+        } catch (Exception e) {
+            throw new RuntimeException("XML→JSON 변환 실패", e);
+        }
     }
 }
+
+
+
+
 

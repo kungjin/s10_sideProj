@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import Feature from "../components/Feature";
@@ -16,23 +16,37 @@ const fmtDate = (d) => new Date(d).toLocaleDateString("ko-KR");
 export default function Home() {
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(false);
+  const mountedRef = useRef(false);
   const navigate = useNavigate();
 
   // 최근 공매 미리보기 (3개)
   useEffect(() => {
-    (async () => {
+    if (mountedRef.current) return; // StrictMode에서 첫 번째만 동작시키기
+    mountedRef.current = true;
+  
+   (async () => {
       setLoading(true);
       try {
-        const list = await getAuctions();
+        const list = await getAuctions({ q: "", pageNo: 1, numOfRows: 12 },
+           );
         // 마감일 오름차순 정렬 후 상위 3개
         const sorted = [...list].sort(
           (a, b) => new Date(a.endDate) - new Date(b.endDate)
         );
         setRecent(sorted.slice(0, 3));
+      } catch (e) {
+        if (e.code === "ERR_CANCELED") {
+          console.log("[Home] 요청 취소됨");
+        } else if (e.code === "ECONNABORTED") {
+          console.warn("[Home] 타임아웃(ECONNABORTED)");
+        } else {
+          console.error("[Home] 요청 실패:", e);
+        }
       } finally {
         setLoading(false);
       }
     })();
+ 
   }, []);
 
   return (

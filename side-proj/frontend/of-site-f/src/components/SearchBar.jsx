@@ -1,24 +1,39 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// src/components/SearchBar.jsx
+import { useState, useEffect } from "react";
 
-export default function SearchBar() {
-  const [q, setQ] = useState("");
-  const navigate = useNavigate();
+export default function SearchBar({
+  initial = "",
+  initialDeadlineOnly = false,
+  onSubmit,                 // (q, deadlineOnly) => void
+  placeholder = "주소/물건명 검색",
+}) {
+  const [qInput, setQInput] = useState(initial);
+  const [deadlineOnly, setDeadlineOnly] = useState(initialDeadlineOnly);
 
-  const onSubmit = (e) => {
+  useEffect(() => setQInput(initial), [initial]);
+  useEffect(() => setDeadlineOnly(initialDeadlineOnly), [initialDeadlineOnly]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // /auctions 페이지로 이동(검색어는 쿼리스트링 사용)
-    navigate(`/auctions?q=${encodeURIComponent(q)}`);
+    onSubmit?.(qInput.trim(), deadlineOnly);
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex items-center gap-2 w-full max-w-xl">
+    <form onSubmit={handleSubmit} className="flex items-center gap-2">
       <input
-        value={q}
-        onChange={(e)=>setQ(e.target.value)}
-        placeholder="예: 화성시 장안면, 근린생활시설, 토지/임야"
-        className="px-4 py-3 rounded-button border border-line bg-white flex-1"
+        value={qInput}
+        onChange={(e)=>setQInput(e.target.value)}
+        placeholder={placeholder}
+        className="px-3 py-2 rounded-button border border-line bg-white w-56"
       />
+      <label className="text-sm flex items-center gap-2">
+        <input
+          type="checkbox"
+          checked={deadlineOnly}
+          onChange={(e)=>setDeadlineOnly(e.target.checked)}
+        />
+        마감 임박
+      </label>
       <button type="submit" className="btn btn-primary">검색</button>
     </form>
   );
