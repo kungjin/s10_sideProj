@@ -6,26 +6,33 @@
 
   <insert id="upsertItem" parameterType="com.of.domain.Item">
     INSERT INTO item_current (
-      source, notice_no, item_no, title, addr_lot, addr_road, usage_name,
-      sale_type, min_bid_price, appraisal_amt,
-      bid_start_at, bid_end_at, status_name,
-      failed_count, view_count,
-      content_hash, updated_at, missing_count
-    ) VALUES (
-      #{source}, #{noticeNo}, #{itemNo}, #{title}, #{addrLot}, #{addrRoad}, #{usageName},
-      #{saleType}, #{minBidPrice}, #{appraisalAmt},
-      #{bidStartAt}, #{bidEndAt}, #{statusName},
-      #{failedCount}, #{viewCount},
-      #{contentHash}, NOW(6), 0
-    )
-    ON DUPLICATE KEY UPDATE
-      title=VALUES(title), addr_lot=VALUES(addr_lot), addr_road=VALUES(addr_road),
-      usage_name=VALUES(usage_name), sale_type=VALUES(sale_type),
-      min_bid_price=VALUES(min_bid_price), appraisal_amt=VALUES(appraisal_amt),
-      bid_start_at=VALUES(bid_start_at), bid_end_at=VALUES(bid_end_at),
-      status_name=VALUES(status_name), failed_count=VALUES(failed_count),
-      view_count=VALUES(view_count), content_hash=VALUES(content_hash),
-      updated_at=NOW(6), missing_count=0;
+    source, notice_no, item_no, title, addr_lot, addr_road, usage_name,
+    sale_type, min_bid_price, appraisal_amt,
+    bid_start_at, bid_end_at, status_name,
+    failed_count, view_count, content_hash, updated_at, missing_count
+  )
+  VALUES (
+    #{source}, #{noticeNo}, #{itemNo}, #{title}, #{addrLot}, #{addrRoad}, #{usageName},
+    #{saleType}, #{minBidPrice}, #{appraisalAmt},
+    #{bidStartAt}, #{bidEndAt}, #{statusName},
+    #{failedCount}, #{viewCount}, #{contentHash}, NOW(6), 0
+  )
+  ON DUPLICATE KEY UPDATE
+    title         = VALUES(title),
+    addr_lot      = VALUES(addr_lot),
+    addr_road     = VALUES(addr_road),
+    usage_name    = VALUES(usage_name),
+    sale_type     = VALUES(sale_type),
+    min_bid_price = VALUES(min_bid_price),
+    appraisal_amt = VALUES(appraisal_amt),
+    bid_start_at  = VALUES(bid_start_at),
+    bid_end_at    = VALUES(bid_end_at),
+    status_name   = VALUES(status_name),
+    failed_count  = VALUES(failed_count),
+    view_count    = VALUES(view_count),
+    content_hash  = IF(VALUES(content_hash) != content_hash, VALUES(content_hash), content_hash),
+    updated_at    = IF(VALUES(content_hash) != content_hash, NOW(6), updated_at),
+    missing_count = 0;
   </insert>
 
 </mapper>

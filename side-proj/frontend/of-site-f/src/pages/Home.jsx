@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import Feature from "../components/Feature";
 import Badge from "../components/Badge";
-import Button from "../components/Button";
+import Button from "../components/Button.jsx";
 import Section from "../components/Section";
 import Stat from "../components/Stat";
 import SearchBar from "../components/SearchBar";
@@ -16,37 +16,36 @@ const fmtDate = (d) => new Date(d).toLocaleDateString("ko-KR");
 export default function Home() {
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(false);
-  const mountedRef = useRef(false);
   const navigate = useNavigate();
+
+    // 🔹 검색 관련 기본값 (홈에서는 초기값만 있음)
+  const q = "";
+  const deadlineOnly = false;
+
+   // 🔹 검색 제출 시 Auctions 페이지로 이동
+  const handleSearchSubmit = (nextQ, nextDeadlineOnly) => {
+    const sp = new URLSearchParams();
+    if (nextQ) sp.set("q", nextQ);
+    if (nextDeadlineOnly) sp.set("deadlineOnly", "1");
+    navigate(`/auctions?${sp.toString()}`); // 검색 결과 페이지로 이동
+  };
+
 
   // 최근 공매 미리보기 (3개)
   useEffect(() => {
-    if (mountedRef.current) return; // StrictMode에서 첫 번째만 동작시키기
-    mountedRef.current = true;
-  
-   (async () => {
+    (async () => {
       setLoading(true);
       try {
-        const list = await getAuctions({ q: "", pageNo: 1, numOfRows: 12 },
-           );
+        const list = await getAuctions();
         // 마감일 오름차순 정렬 후 상위 3개
         const sorted = [...list].sort(
           (a, b) => new Date(a.endDate) - new Date(b.endDate)
         );
         setRecent(sorted.slice(0, 3));
-      } catch (e) {
-        if (e.code === "ERR_CANCELED") {
-          console.log("[Home] 요청 취소됨");
-        } else if (e.code === "ECONNABORTED") {
-          console.warn("[Home] 타임아웃(ECONNABORTED)");
-        } else {
-          console.error("[Home] 요청 실패:", e);
-        }
       } finally {
         setLoading(false);
       }
     })();
- 
   }, []);
 
   return (
@@ -76,7 +75,11 @@ export default function Home() {
 
             {/* 바로검색 */}
             <div className="mt-2">
-              <SearchBar />
+              <SearchBar
+                initial={q}
+                initialDeadlineOnly={deadlineOnly}
+                onSubmit={handleSearchSubmit}
+                placeholder="주소/물건명 검색" />
               <div className="text-xs text-subink mt-2">
                 예) “화성시 장안면”, “근린생활시설”, “토지/임야”
               </div>
@@ -265,14 +268,14 @@ function DotIcon() {
 function BoltIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" strokeWidth="2" fill="none"/>
+      <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" strokeWidth="2" fill="none" />
     </svg>
   );
 }
 function ShieldIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z" stroke="currentColor" strokeWidth="2" fill="none"/>
+      <path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z" stroke="currentColor" strokeWidth="2" fill="none" />
     </svg>
   );
 }

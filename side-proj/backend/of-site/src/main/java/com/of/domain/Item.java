@@ -4,8 +4,10 @@ package com.of.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(of = {"source","itemNo"})
 public class Item {
     private String source;
     private Long noticeNo;

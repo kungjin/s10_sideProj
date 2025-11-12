@@ -24,8 +24,9 @@ export default function SearchBar({
         value={qInput}
         onChange={(e)=>setQInput(e.target.value)}
         placeholder={placeholder}
-        className="px-3 py-2 rounded-button border border-line bg-white w-56"
+        className="px-3 py-2 rounded-button border border-line bg-white w-86"
       />
+      <button type="submit" className="btn btn-primary">검색</button>
       <label className="text-sm flex items-center gap-2">
         <input
           type="checkbox"
@@ -33,8 +34,7 @@ export default function SearchBar({
           onChange={(e)=>setDeadlineOnly(e.target.checked)}
         />
         마감 임박
-      </label>
-      <button type="submit" className="btn btn-primary">검색</button>
+      </label>  
     </form>
   );
 }

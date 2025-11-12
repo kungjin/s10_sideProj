@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'com.example'
+group = 'com.of'
 version = '0.0.1-SNAPSHOT'
 description = 'Demo project for Spring Boot'
 
@@ -37,19 +37,24 @@ dependencies {
     // (선택) Netty 이슈가 있으면 아래처럼 커넥터를 Apache HttpClient로 바꿔도 됨
     // implementation 'org.apache.httpcomponents.client5:httpclient5'
 
-    // 기타
+    // === Jackson XML (외부 XML 파싱 필요 시)
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.2'
-    implementation 'org.json:json:20231013'
+    // org.json은 가능하면 제거 (Jackson으로 대체 가능)
+    // implementation 'org.json:json:20231013'
 
     // DB 드라이버: 하나만 선택해서 쓰기 (MariaDB 추천)
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     // runtimeOnly 'com.mysql:mysql-connector-j' // <- MySQL 쓸 때만 사용
+    
+    // === Swagger / OpenAPI (springdoc)
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
+     // === lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
+    
+	 // === dev/test
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

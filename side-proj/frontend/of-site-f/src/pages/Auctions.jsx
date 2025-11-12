@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { getAuctions } from "../api/auctions";
+import AuctionCard from "../components/AuctionCard";
 import Card from "../components/Card";
-import Badge from "../components/Badge";
 import SearchBar from "../components/SearchBar";
 
 // 유틸: ONBID 날짜 파싱
@@ -11,7 +11,7 @@ function parseOnbidDate(s) {
   if (!s) return null;
   const str = String(s).padEnd(14, "0");
   const dt = new Date(
-    `${str.slice(0,4)}-${str.slice(4,6)}-${str.slice(6,8)}T${str.slice(8,10)}:${str.slice(10,12)}:${str.slice(12,14)}`
+    `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}T${str.slice(8, 10)}:${str.slice(10, 12)}:${str.slice(12, 14)}`
   );
   return isNaN(dt.getTime()) ? null : dt;
 }
@@ -87,30 +87,10 @@ export default function Auctions() {
         {!loading && err && <Card>{err}</Card>}
         {!loading && !err && list.length === 0 && <Card>검색 결과가 없습니다.</Card>}
 
-        {!loading && !err && list.map((item) => {
-          const endDt = parseOnbidDate(item.endDate);
-          const isSoon = endDt ? (endDt.getTime() - Date.now()) < 1000*60*60*24*3 : false;
-          const price = Number(item.minPrice ?? 0);
+        {!loading && !err && list.map((item) => (
+          <AuctionCard key={item.uid} item={item} />
+        ))}
 
-          return (
-            <Card key={item.uid}>
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <Link to={`/auctions/${item.id}`} className="text-lg font-semibold hover:underline">
-                    {item.title}
-                  </Link>
-                  <div className="mt-1 text-sm text-subink">{item.category}</div>
-                </div>
-                <Badge tone={isSoon ? "danger" : "info"}>
-                  {endDt ? `${endDt.toLocaleDateString()} 마감` : "마감일 정보 없음"}
-                </Badge>
-              </div>
-              <div className="mt-4 text-sm">
-                최저입찰가 <span className="font-semibold">{price.toLocaleString()}원</span>
-              </div>
-            </Card>
-          );
-        })}
       </div>
     </div>
   );
