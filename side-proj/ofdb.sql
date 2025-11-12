@@ -95,3 +95,77 @@ CONSTRAINT fk_asset_link_item FOREIGN KEY (item_id) REFERENCES item_current(item
 );
 
 SELECT *FROM asset;
+
+
+mysqldump -u root -p
+
+SELECT COUNT(*) FROM item_current;
+SELECT COUNT(*) FROM staging_raw;
+SELECT COUNT(*) FROM item_version;
+
+
+-- DB 레벨(선택)
+ALTER DATABASE ofdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+-- 테이블/컬럼 문자셋 일괄 정리
+ALTER TABLE item_current CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE item_version CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE staging_raw  CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE asset        CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE asset_item_link CONVERT TO CHARACTER SET utf8mb4 COLLATE UTF8MB4_UNICODE_CI;
+
+-- NULL → 0 기본값 채우기
+UPDATE item_current SET failed_count = 0 WHERE failed_count IS NULL;
+UPDATE item_current SET view_count   = 0 WHERE view_count   IS NULL;
+
+-- DATETIME(6) 정규화
+ALTER TABLE item_current
+  MODIFY bid_start_at DATETIME(6) NULL,
+  MODIFY bid_end_at   DATETIME(6) NULL,
+  MODIFY updated_at   DATETIME(6) NOT NULL;
+
+ALTER TABLE item_version
+  MODIFY created_at   DATETIME(6) NOT NULL;
+
+ALTER TABLE staging_raw
+  MODIFY received_at  DATETIME(6) NOT NULL;
+
+-- 카운터 기본값 부여
+ALTER TABLE item_current
+  MODIFY failed_count INT NOT NULL DEFAULT 0,
+  MODIFY view_count   INT NOT NULL DEFAULT 0;
+  
+-- 예: 수집 시각 조회가 잦다면
+ALTER TABLE staging_raw ADD KEY ix_staging_received (received_at);
+
+-- 외래키에 ON UPDATE/DELETE CASCADE를 주고 싶다면 (재정의 필요)
+ALTER TABLE item_version DROP FOREIGN KEY fk_item_ver;
+ALTER TABLE item_version
+  ADD CONSTRAINT fk_item_ver
+  FOREIGN KEY (item_id) REFERENCES item_current(item_id)
+  ON UPDATE CASCADE ON DELETE CASCADE;  
+  
+  
+  -- 중복 확인
+SELECT source, notice_no, item_no, COUNT(*) cnt
+FROM item_current
+GROUP BY source, notice_no, item_no
+HAVING cnt > 1;
+
+-- 트랜잭션으로 보호
+START TRANSACTION;
+
+-- (둘 중 하나 골라 실행)
+-- A) 윈도우 함수 버전
+-- B) NOT EXISTS 버전
+
+-- 결과 확인
+SELECT ROW_COUNT() AS deleted_rows;
+
+-- 문제 없으면
+COMMIT;
+-- 취소하려면
+-- ROLLBACK;
+  
+  

@@ -40,7 +40,7 @@ dependencies {
     // === Jackson XML (외부 XML 파싱 필요 시)
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.2'
     // org.json은 가능하면 제거 (Jackson으로 대체 가능)
-    // implementation 'org.json:json:20231013'
+    implementation 'org.json:json:20231013'
 
     // DB 드라이버: 하나만 선택해서 쓰기 (MariaDB 추천)
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
@@ -58,6 +58,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    
+    
 }
 
 tasks.named('test') {

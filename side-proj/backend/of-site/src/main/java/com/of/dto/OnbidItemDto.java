@@ -18,5 +18,6 @@ public class OnbidItemDto {
     private String statusName;      // PBCT_CLTR_STAT_NM
     private Integer failedCount;    // USCBD_CNT
     private Integer viewCount;      // IQRY_CNT
+    
 }
 

@@ -255,3 +255,449 @@ io.netty.channel.ConnectTimeoutException: connection timed out after 5000 ms: op
 2025-11-12T14:59:03.772+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
 2025-11-12T14:59:03.773+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.322 seconds (process running for 3751.285)
 2025-11-12T14:59:03.774+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T15:53:57.774+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T15:53:57.775+09:00  INFO 19700 --- [of-site] [Thread-31] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T15:53:57.777+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T15:53:57.778+09:00  INFO 19700 --- [of-site] [Thread-31] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2025-11-12T15:53:57.779+09:00  INFO 19700 --- [of-site] [Thread-31] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2025-11-12T15:53:57.856+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T15:53:57.856+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T15:53:57.856+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T15:53:58.026+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T15:53:58.028+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T15:53:58.028+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T15:53:58.040+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-12T15:53:58.040+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 182 ms
+2025-11-12T15:53:58.052+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2025-11-12T15:53:58.055+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-6 - Added connection org.mariadb.jdbc.Connection@6db55f6
+2025-11-12T15:53:58.055+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2025-11-12T15:53:58.150+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T15:53:58.156+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T15:53:58.158+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.319 seconds (process running for 7045.67)
+2025-11-12T15:53:58.159+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T15:57:32.952+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T15:57:32.953+09:00  INFO 19700 --- [of-site] [Thread-35] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T15:57:32.955+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T15:57:32.956+09:00  INFO 19700 --- [of-site] [Thread-35] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2025-11-12T15:57:32.957+09:00  INFO 19700 --- [of-site] [Thread-35] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2025-11-12T15:57:33.031+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T15:57:33.031+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T15:57:33.031+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T15:57:33.179+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T15:57:33.179+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T15:57:33.179+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T15:57:33.191+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-12T15:57:33.191+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 158 ms
+2025-11-12T15:57:33.201+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2025-11-12T15:57:33.203+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-7 - Added connection org.mariadb.jdbc.Connection@1e2afebf
+2025-11-12T15:57:33.203+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2025-11-12T15:57:33.206+09:00  WARN 19700 --- [of-site] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'webConfig': Injection of autowired dependencies failed
+2025-11-12T15:57:33.206+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2025-11-12T15:57:33.206+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2025-11-12T15:57:33.206+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-11-12T15:57:33.209+09:00  INFO 19700 --- [of-site] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-11-12T15:57:33.222+09:00 ERROR 19700 --- [of-site] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'webConfig': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:515) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1459) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:606) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1228) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1194) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:990) ~[spring-context-6.2.12.jar:6.2.12]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.12.jar:6.2.12]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.7.jar:3.5.7]
+	at com.of.OfSiteApplication.main(OfSiteApplication.java:17) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.7.jar:3.5.7]
+Caused by: org.springframework.util.PlaceholderResolutionException: Could not resolve placeholder 'app.cors.allowed-origins' in value "${app.cors.allowed-origins}"
+	at org.springframework.util.PlaceholderResolutionException.withValue(PlaceholderResolutionException.java:81) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.util.PlaceholderParser$ParsedValue.resolve(PlaceholderParser.java:298) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.util.PlaceholderParser.replacePlaceholders(PlaceholderParser.java:131) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:114) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:293) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:264) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:186) ~[spring-context-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:970) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1675) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1653) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.2.12.jar:6.2.12]
+	... 22 common frames omitted
+
+2025-11-12T15:59:23.913+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T15:59:23.913+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T15:59:23.913+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T15:59:24.080+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T15:59:24.081+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T15:59:24.082+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T15:59:24.102+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T15:59:24.102+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 188 ms
+2025-11-12T15:59:24.118+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+2025-11-12T15:59:24.121+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-8 - Added connection org.mariadb.jdbc.Connection@4b7ff592
+2025-11-12T15:59:24.122+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+2025-11-12T15:59:24.206+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T15:59:24.212+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T15:59:24.213+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.314 seconds (process running for 7371.724)
+2025-11-12T15:59:24.214+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T15:59:56.983+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T15:59:56.984+09:00  INFO 19700 --- [of-site] [Thread-39] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T15:59:56.985+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T15:59:56.987+09:00  INFO 19700 --- [of-site] [Thread-39] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
+2025-11-12T15:59:56.987+09:00  INFO 19700 --- [of-site] [Thread-39] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
+2025-11-12T15:59:57.064+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T15:59:57.064+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T15:59:57.064+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T15:59:57.214+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T15:59:57.215+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T15:59:57.215+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T15:59:57.227+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T15:59:57.227+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 161 ms
+2025-11-12T15:59:57.239+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Starting...
+2025-11-12T15:59:57.241+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-9 - Added connection org.mariadb.jdbc.Connection@4b776461
+2025-11-12T15:59:57.241+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Start completed.
+2025-11-12T15:59:57.242+09:00  WARN 19700 --- [of-site] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'webConfig': Injection of autowired dependencies failed
+2025-11-12T15:59:57.242+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown initiated...
+2025-11-12T15:59:57.242+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown completed.
+2025-11-12T15:59:57.243+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-11-12T15:59:57.245+09:00  INFO 19700 --- [of-site] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-11-12T15:59:57.247+09:00 ERROR 19700 --- [of-site] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'webConfig': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:515) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1459) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:606) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1228) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1194) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:990) ~[spring-context-6.2.12.jar:6.2.12]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.12.jar:6.2.12]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.7.jar:3.5.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.7.jar:3.5.7]
+	at com.of.OfSiteApplication.main(OfSiteApplication.java:17) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.7.jar:3.5.7]
+Caused by: org.springframework.util.PlaceholderResolutionException: Could not resolve placeholder 'app.cors.allowed-origins' in value "${app.cors.allowed-origins}"
+	at org.springframework.util.PlaceholderResolutionException.withValue(PlaceholderResolutionException.java:81) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.util.PlaceholderParser$ParsedValue.resolve(PlaceholderParser.java:298) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.util.PlaceholderParser.replacePlaceholders(PlaceholderParser.java:131) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:114) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:293) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:264) ~[spring-core-6.2.12.jar:6.2.12]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:186) ~[spring-context-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:970) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1675) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1653) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146) ~[spring-beans-6.2.12.jar:6.2.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.2.12.jar:6.2.12]
+	... 22 common frames omitted
+
+2025-11-12T16:00:09.880+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T16:00:09.880+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T16:00:09.880+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T16:00:10.017+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T16:00:10.018+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T16:00:10.018+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T16:00:10.030+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T16:00:10.030+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 149 ms
+2025-11-12T16:00:10.039+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Starting...
+2025-11-12T16:00:10.041+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-10 - Added connection org.mariadb.jdbc.Connection@49c5a8c
+2025-11-12T16:00:10.041+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Start completed.
+2025-11-12T16:00:10.110+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T16:00:10.115+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T16:00:10.117+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.251 seconds (process running for 7417.628)
+2025-11-12T16:00:10.118+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T16:02:14.668+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T16:02:14.669+09:00  INFO 19700 --- [of-site] [Thread-46] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T16:02:14.671+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T16:02:14.672+09:00  INFO 19700 --- [of-site] [Thread-46] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown initiated...
+2025-11-12T16:02:14.673+09:00  INFO 19700 --- [of-site] [Thread-46] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown completed.
+2025-11-12T16:02:14.756+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T16:02:14.756+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T16:02:14.756+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T16:02:14.890+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T16:02:14.890+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T16:02:14.890+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T16:02:14.902+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T16:02:14.902+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 145 ms
+2025-11-12T16:02:14.913+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Starting...
+2025-11-12T16:02:14.915+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-11 - Added connection org.mariadb.jdbc.Connection@6484a442
+2025-11-12T16:02:14.915+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Start completed.
+2025-11-12T16:02:14.983+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T16:02:14.989+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T16:02:14.990+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.26 seconds (process running for 7542.502)
+2025-11-12T16:02:14.991+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T16:02:50.918+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T16:02:50.919+09:00  INFO 19700 --- [of-site] [Thread-53] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T16:02:50.920+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T16:02:50.922+09:00  INFO 19700 --- [of-site] [Thread-53] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Shutdown initiated...
+2025-11-12T16:02:50.922+09:00  INFO 19700 --- [of-site] [Thread-53] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Shutdown completed.
+2025-11-12T16:02:50.996+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T16:02:50.996+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T16:02:50.996+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T16:02:51.131+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T16:02:51.132+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T16:02:51.132+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T16:02:51.144+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T16:02:51.144+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 147 ms
+2025-11-12T16:02:51.154+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Starting...
+2025-11-12T16:02:51.157+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-12 - Added connection org.mariadb.jdbc.Connection@2556ae9d
+2025-11-12T16:02:51.157+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Start completed.
+2025-11-12T16:02:51.228+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T16:02:51.233+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T16:02:51.236+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.255 seconds (process running for 7578.746)
+2025-11-12T16:02:51.237+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T16:25:19.323+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T16:25:19.324+09:00  INFO 19700 --- [of-site] [Thread-57] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T16:25:19.326+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T16:25:19.327+09:00  INFO 19700 --- [of-site] [Thread-57] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown initiated...
+2025-11-12T16:25:19.328+09:00  INFO 19700 --- [of-site] [Thread-57] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown completed.
+2025-11-12T16:25:19.398+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T16:25:19.399+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T16:25:19.399+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T16:25:19.559+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T16:25:19.560+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T16:25:19.561+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T16:25:19.573+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T16:25:19.573+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 173 ms
+2025-11-12T16:25:19.584+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Starting...
+2025-11-12T16:25:19.587+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-13 - Added connection org.mariadb.jdbc.Connection@d8bff51
+2025-11-12T16:25:19.587+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Start completed.
+2025-11-12T16:25:19.675+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T16:25:19.681+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T16:25:19.683+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.3 seconds (process running for 8927.194)
+2025-11-12T16:25:19.683+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T16:35:10.027+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-12T16:35:10.028+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-12T16:35:10.028+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-11-12T16:42:09.190+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T16:42:09.191+09:00  INFO 19700 --- [of-site] [Thread-61] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T16:42:09.193+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T16:42:09.194+09:00  INFO 19700 --- [of-site] [Thread-61] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Shutdown initiated...
+2025-11-12T16:42:09.195+09:00  INFO 19700 --- [of-site] [Thread-61] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Shutdown completed.
+2025-11-12T16:42:09.269+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T16:42:09.269+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T16:42:09.269+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T16:42:09.432+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T16:42:09.433+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T16:42:09.433+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T16:42:09.445+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T16:42:09.445+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 174 ms
+2025-11-12T16:42:09.456+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-14 - Starting...
+2025-11-12T16:42:09.460+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-14 - Added connection org.mariadb.jdbc.Connection@34c168c0
+2025-11-12T16:42:09.460+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-14 - Start completed.
+2025-11-12T16:42:09.549+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T16:42:09.555+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T16:42:09.556+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.303 seconds (process running for 9937.067)
+2025-11-12T16:42:09.557+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T16:43:43.374+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T16:43:43.374+09:00  INFO 19700 --- [of-site] [Thread-77] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T16:43:43.376+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T16:43:43.378+09:00  INFO 19700 --- [of-site] [Thread-77] com.zaxxer.hikari.HikariDataSource       : HikariPool-14 - Shutdown initiated...
+2025-11-12T16:43:43.378+09:00  INFO 19700 --- [of-site] [Thread-77] com.zaxxer.hikari.HikariDataSource       : HikariPool-14 - Shutdown completed.
+2025-11-12T16:43:43.458+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T16:43:43.458+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T16:43:43.458+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T16:43:43.605+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T16:43:43.605+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T16:43:43.605+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T16:43:43.617+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T16:43:43.617+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 158 ms
+2025-11-12T16:43:43.627+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Starting...
+2025-11-12T16:43:43.629+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-15 - Added connection org.mariadb.jdbc.Connection@40510a11
+2025-11-12T16:43:43.629+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Start completed.
+2025-11-12T16:43:43.698+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T16:43:43.704+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T16:43:43.705+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.261 seconds (process running for 10031.216)
+2025-11-12T16:43:43.706+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T16:44:11.557+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T16:44:11.558+09:00  INFO 19700 --- [of-site] [Thread-81] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T16:44:11.559+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T16:44:11.561+09:00  INFO 19700 --- [of-site] [Thread-81] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Shutdown initiated...
+2025-11-12T16:44:11.561+09:00  INFO 19700 --- [of-site] [Thread-81] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Shutdown completed.
+2025-11-12T16:44:11.647+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T16:44:11.647+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T16:44:11.647+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T16:44:11.808+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T16:44:11.808+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T16:44:11.808+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T16:44:11.820+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T16:44:11.820+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 172 ms
+2025-11-12T16:44:11.831+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Starting...
+2025-11-12T16:44:11.833+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-16 - Added connection org.mariadb.jdbc.Connection@5d255da5
+2025-11-12T16:44:11.833+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Start completed.
+2025-11-12T16:44:11.900+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T16:44:11.906+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T16:44:11.924+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.291 seconds (process running for 10059.434)
+2025-11-12T16:44:11.925+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T16:45:14.795+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-12T16:45:14.795+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-12T16:45:14.795+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-11-12T16:45:28.875+09:00 ERROR 19700 --- [of-site] [http-nio-8095-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Handler dispatch failed: java.lang.Error: Unresolved compilation problems: 
+	JSONObject cannot be resolved to a type
+	JSONObject cannot be resolved to a type
+	JSONArray cannot be resolved to a type
+	JSONArray cannot be resolved to a type
+	JSONArray cannot be resolved to a type
+	JSONObject cannot be resolved to a type
+] with root cause
+
+java.lang.Error: Unresolved compilation problems: 
+	JSONObject cannot be resolved to a type
+	JSONObject cannot be resolved to a type
+	JSONArray cannot be resolved to a type
+	JSONArray cannot be resolved to a type
+	JSONArray cannot be resolved to a type
+	JSONObject cannot be resolved to a type
+
+	at com.of.util.JsonFilters.filterByEquals(JsonFilters.java:96) ~[main/:na]
+	at com.of.controller.PublicDataController.auctionDetail(PublicDataController.java:149) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.48.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.48.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-11-12T16:56:53.463+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-12T16:56:53.464+09:00  INFO 19700 --- [of-site] [Thread-85] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T16:56:53.466+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T16:56:53.468+09:00  INFO 19700 --- [of-site] [Thread-85] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Shutdown initiated...
+2025-11-12T16:56:53.469+09:00  INFO 19700 --- [of-site] [Thread-85] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Shutdown completed.
+2025-11-12T16:56:53.540+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T16:56:53.540+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T16:56:53.541+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T16:56:53.711+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T16:56:53.712+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T16:56:53.712+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T16:56:53.724+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T16:56:53.725+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 183 ms
+2025-11-12T16:56:53.736+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-17 - Starting...
+2025-11-12T16:56:53.740+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-17 - Added connection org.mariadb.jdbc.Connection@695b8c86
+2025-11-12T16:56:53.740+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-17 - Start completed.
+2025-11-12T16:56:53.829+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T16:56:53.835+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T16:56:53.837+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.313 seconds (process running for 10821.348)
+2025-11-12T16:56:53.837+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T17:01:08.510+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-12T17:01:08.510+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-12T17:01:08.510+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-11-12T17:12:09.379+09:00  INFO 19700 --- [of-site] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 17 class path changes (0 additions, 0 deletions, 17 modifications)
+2025-11-12T17:12:09.380+09:00  INFO 19700 --- [of-site] [Thread-101] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T17:12:09.382+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T17:12:09.384+09:00  INFO 19700 --- [of-site] [Thread-101] com.zaxxer.hikari.HikariDataSource       : HikariPool-17 - Shutdown initiated...
+2025-11-12T17:12:09.385+09:00  INFO 19700 --- [of-site] [Thread-101] com.zaxxer.hikari.HikariDataSource       : HikariPool-17 - Shutdown completed.
+2025-11-12T17:12:09.484+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 19700 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T17:12:09.485+09:00 DEBUG 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T17:12:09.485+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T17:12:09.745+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T17:12:09.746+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T17:12:09.746+09:00  INFO 19700 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T17:12:09.759+09:00  INFO 19700 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-12T17:12:09.759+09:00  INFO 19700 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 273 ms
+2025-11-12T17:12:09.772+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Starting...
+2025-11-12T17:12:09.776+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-18 - Added connection org.mariadb.jdbc.Connection@1591be80
+2025-11-12T17:12:09.776+09:00  INFO 19700 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Start completed.
+2025-11-12T17:12:09.877+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T17:12:09.885+09:00  INFO 19700 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T17:12:09.887+09:00  INFO 19700 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 0.423 seconds (process running for 11737.397)
+2025-11-12T17:12:09.887+09:00  INFO 19700 --- [of-site] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-12T17:12:15.841+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-2] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-12T17:12:15.841+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-12T17:12:15.842+09:00  INFO 19700 --- [of-site] [http-nio-8095-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-11-12T17:26:08.203+09:00  INFO 19700 --- [of-site] [RMI TCP Connection(296)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-11-12T17:26:08.203+09:00  INFO 19700 --- [of-site] [RMI TCP Connection(296)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-12T17:26:08.205+09:00  INFO 19700 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-12T17:26:08.207+09:00  INFO 19700 --- [of-site] [RMI TCP Connection(296)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Shutdown initiated...
+2025-11-12T17:26:08.208+09:00  INFO 19700 --- [of-site] [RMI TCP Connection(296)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Shutdown completed.
+2025-11-12T17:26:10.939+09:00  INFO 17192 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Starting OfSiteApplication using Java 21.0.8 with PID 17192 (C:\s09_springboot\s10_sideProj\side-proj\backend\of-site\bin\main started by YONSAI in C:\s09_springboot\s10_sideProj\side-proj\backend\of-site)
+2025-11-12T17:26:10.940+09:00 DEBUG 17192 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-12T17:26:10.940+09:00  INFO 17192 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T17:26:10.970+09:00  INFO 17192 --- [of-site] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-12T17:26:10.970+09:00  INFO 17192 --- [of-site] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-12T17:26:11.814+09:00  INFO 17192 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2025-11-12T17:26:11.824+09:00  INFO 17192 --- [of-site] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T17:26:11.824+09:00  INFO 17192 --- [of-site] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-12T17:26:11.860+09:00  INFO 17192 --- [of-site] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-12T17:26:11.860+09:00  INFO 17192 --- [of-site] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 890 ms
+2025-11-12T17:26:11.913+09:00  INFO 17192 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-12T17:26:11.978+09:00  INFO 17192 --- [of-site] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@4d8c0cb2
+2025-11-12T17:26:11.980+09:00  INFO 17192 --- [of-site] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-12T17:26:12.570+09:00  INFO 17192 --- [of-site] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-12T17:26:12.597+09:00  INFO 17192 --- [of-site] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2025-11-12T17:26:12.603+09:00  INFO 17192 --- [of-site] [restartedMain] com.of.OfSiteApplication                 : Started OfSiteApplication in 1.941 seconds (process running for 2.408)
+2025-11-12T17:26:27.209+09:00  INFO 17192 --- [of-site] [http-nio-8095-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-12T17:26:27.209+09:00  INFO 17192 --- [of-site] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-12T17:26:27.210+09:00  INFO 17192 --- [of-site] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

@@ -156,3 +156,33 @@ export async function getAuctions(
 
   return list;
 }
+/* ---------- Detail API ---------- */
+// 백엔드에 /public/auctions/:id 가 있다면 1차 시도하고,
+// 없으면 목록에서 fallback으로 찾아주는 방어 로직.
+export async function getAuctionById(id, axiosConfig = {}) {
+  if (id == null) throw new Error("id is required");
+
+  // 1) 개별 조회 엔드포인트 시도
+  try {
+    const { data } = await client.get(`/public/auctions/${encodeURIComponent(id)}`, {
+      timeout: 60000,
+      ...axiosConfig,
+    });
+    const list = normalizeList(data);
+    // normalizeList가 단건도 배열로 맞춘다는 가정
+    if (Array.isArray(list) && list.length > 0) return list[0];
+    if (data && !Array.isArray(data)) return data; // 혹시 진짜 단건이면 그대로 반환
+  } catch (e) {
+    // 404/미구현이면 fallback 진행
+    // console.debug("detail endpoint not available, falling back to list search:", e);
+  }
+
+  // 2) fallback: 목록 불러와서 매칭
+  const list = await getAuctions({}, axiosConfig);
+  // id 또는 uid 기준으로 찾아보기
+  const found =
+    list.find(v => String(v.id) === String(id)) ||
+    list.find(v => String(v.uid) === String(id));
+  if (!found) throw new Error("Auction not found");
+  return found;
+}

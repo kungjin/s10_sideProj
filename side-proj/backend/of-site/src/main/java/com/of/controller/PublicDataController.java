@@ -2,6 +2,8 @@
 package com.of.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import java.util.Map;
 @RequestMapping("/api/public")
 @RequiredArgsConstructor
 public class PublicDataController {
-
+	@Qualifier("publicDataClient")   // ★ 명시적 주입
     private final WebClient webClient;
 
     @Value("${public.api.base-url}")
@@ -65,56 +67,67 @@ public class PublicDataController {
         // XML → JSON
         String json = com.of.util.XmlJsonConverter.xmlStringToJsonString(xml);
 
-        // 서버 측 가벼운 contains 필터(대소문자 무시, 실패해도 서버 500 금지)
+//        // 서버 측 가벼운 contains 필터(대소문자 무시, 실패해도 서버 500 금지)
+//        if (q != null && !q.isBlank()) {
+//            try {
+//                org.json.JSONObject root = new org.json.JSONObject(json);
+//                final String pathWithResp = "response.body.items.item";
+//                final String pathNoResp   = "body.items.item";
+//                String path = root.has("response") ? pathWithResp : pathNoResp;
+//
+//                int before = com.of.util.JsonFilters.countAtPath(json, path);
+//
+//                // 다중 필드 검색: 물건명/도로명/지번/카테고리
+//                String filtered = com.of.util.JsonFilters.filterByContains(
+//                        json,
+//                        path,
+//                        new String[]{"CLTR_NM", "LDNM_ADRS", "NMRD_ADRS", "CTGR_FULL_NM"},
+//                        q.trim()
+//                );
+//                int after = com.of.util.JsonFilters.countAtPath(filtered, path);
+//
+//                // 경로 추정이 빗나간 경우 반대 경로로 한 번 더 시도
+//                if (after == before) {
+//                    String altPath = path.equals(pathWithResp) ? pathNoResp : pathWithResp;
+//                    int altBefore = com.of.util.JsonFilters.countAtPath(json, altPath);
+//
+//                    String filtered2 = com.of.util.JsonFilters.filterByContains(
+//                            json,
+//                            altPath,
+//                            new String[]{"CLTR_NM", "LDNM_ADRS", "NMRD_ADRS", "CTGR_FULL_NM"},
+//                            q.trim()
+//                    );
+//                    int altAfter = com.of.util.JsonFilters.countAtPath(filtered2, altPath);
+//
+//                    System.out.println("[auctions] path=" + path + " before=" + before + " after=" + after
+//                            + " | altPath=" + altPath + " altBefore=" + altBefore + " altAfter=" + altAfter
+//                            + " | q=" + q);
+//
+//                    // 더 잘 줄어든 쪽을 채택
+//                    json = (altAfter < altBefore && altAfter <= after) ? filtered2 : filtered;
+//                } else {
+//                    json = filtered;
+//                    System.out.println("[auctions] path=" + path + " before=" + before + " after=" + after + " | q=" + q);
+//                }
+//
+//            } catch (Exception e) {
+//                System.out.println("[auctions] filter skipped: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+//            }
+//        }
+//
+//        return ResponseEntity.ok(json);
+//    }
+        
         if (q != null && !q.isBlank()) {
             try {
-                org.json.JSONObject root = new org.json.JSONObject(json);
-                final String pathWithResp = "response.body.items.item";
-                final String pathNoResp   = "body.items.item";
-                String path = root.has("response") ? pathWithResp : pathNoResp;
-
-                int before = com.of.util.JsonFilters.countAtPath(json, path);
-
-                // 다중 필드 검색: 물건명/도로명/지번/카테고리
-                String filtered = com.of.util.JsonFilters.filterByContains(
-                        json,
-                        path,
-                        new String[]{"CLTR_NM", "LDNM_ADRS", "NMRD_ADRS", "CTGR_FULL_NM"},
-                        q.trim()
-                );
-                int after = com.of.util.JsonFilters.countAtPath(filtered, path);
-
-                // 경로 추정이 빗나간 경우 반대 경로로 한 번 더 시도
-                if (after == before) {
-                    String altPath = path.equals(pathWithResp) ? pathNoResp : pathWithResp;
-                    int altBefore = com.of.util.JsonFilters.countAtPath(json, altPath);
-
-                    String filtered2 = com.of.util.JsonFilters.filterByContains(
-                            json,
-                            altPath,
-                            new String[]{"CLTR_NM", "LDNM_ADRS", "NMRD_ADRS", "CTGR_FULL_NM"},
-                            q.trim()
-                    );
-                    int altAfter = com.of.util.JsonFilters.countAtPath(filtered2, altPath);
-
-                    System.out.println("[auctions] path=" + path + " before=" + before + " after=" + after
-                            + " | altPath=" + altPath + " altBefore=" + altBefore + " altAfter=" + altAfter
-                            + " | q=" + q);
-
-                    // 더 잘 줄어든 쪽을 채택
-                    json = (altAfter < altBefore && altAfter <= after) ? filtered2 : filtered;
-                } else {
-                    json = filtered;
-                    System.out.println("[auctions] path=" + path + " before=" + before + " after=" + after + " | q=" + q);
-                }
-
+                json = applyContainsFilter(json, q.trim());
             } catch (Exception e) {
-                System.out.println("[auctions] filter skipped: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+                System.out.println("[auctions] filter skipped: " + e.getMessage());
             }
         }
-
         return ResponseEntity.ok(json);
-    }
+    }  
+        
 
     /* ======================
      * 상세 (간단 equal 필터)
@@ -141,6 +154,29 @@ public class PublicDataController {
         );
         return ResponseEntity.ok(one);
     }
+    
+    
+    private String applyContainsFilter(String json, String keyword) {
+        String path1 = "response.body.items.item";
+        String path2 = "body.items.item";
+
+        int before1 = com.of.util.JsonFilters.countAtPath(json, path1);
+        String f1 = com.of.util.JsonFilters.filterByContains(
+            json, path1, new String[]{"CLTR_NM","LDNM_ADRS","NMRD_ADRS","CTGR_FULL_NM"}, keyword
+        );
+        int after1 = com.of.util.JsonFilters.countAtPath(f1, path1);
+
+        int before2 = com.of.util.JsonFilters.countAtPath(json, path2);
+        String f2 = com.of.util.JsonFilters.filterByContains(
+            json, path2, new String[]{"CLTR_NM","LDNM_ADRS","NMRD_ADRS","CTGR_FULL_NM"}, keyword
+        );
+        int after2 = com.of.util.JsonFilters.countAtPath(f2, path2);
+
+        System.out.println("[auctions] q=" + keyword + " | path1 " + before1 + "→" + after1 + " | path2 " + before2 + "→" + after2);
+        return (after2 < after1) ? f2 : f1;
+    }
+    
+    
 
     /* =======================
      * 공용 Upstream XML 호출
@@ -148,19 +184,19 @@ public class PublicDataController {
     private String proxyCallForXml(
             int pageNo, int numOfRows, String DPSL_MTD_CD,
             String PBCT_BEGN_DTM, String PBCT_CLS_DTM,
-            Map<String, String> extra
-    ) {
-        pageNo    = Math.max(1, pageNo);
-        numOfRows = Math.max(1, numOfRows);
+            Map<String,String> extra
+        ) {
+            pageNo = Math.max(1, pageNo);
+            numOfRows = Math.max(1, numOfRows);
 
-        var today = LocalDate.now();
-        var from  = today.minusDays(30);
-        var fmt   = DateTimeFormatter.BASIC_ISO_DATE;
+            var today = LocalDate.now();
+            var from = today.minusDays(30);
+            var fmt = DateTimeFormatter.BASIC_ISO_DATE;
 
-        String beg = (PBCT_BEGN_DTM == null || PBCT_BEGN_DTM.isBlank()) ? from.format(fmt) : PBCT_BEGN_DTM;
-        String end = (PBCT_CLS_DTM == null || PBCT_CLS_DTM.isBlank()) ? today.format(fmt) : PBCT_CLS_DTM;
+            String beg = (PBCT_BEGN_DTM == null || PBCT_BEGN_DTM.isBlank()) ? from.format(fmt) : PBCT_BEGN_DTM;
+            String end = (PBCT_CLS_DTM == null || PBCT_CLS_DTM.isBlank()) ? today.format(fmt) : PBCT_CLS_DTM;
 
-        var ub = UriComponentsBuilder.fromUriString(baseUrl.trim())
+            var ub = UriComponentsBuilder.fromUriString(baseUrl.trim())
                 .queryParam("serviceKey", serviceKey)
                 .queryParam("pageNo", pageNo)
                 .queryParam("numOfRows", numOfRows)
@@ -168,31 +204,30 @@ public class PublicDataController {
                 .queryParam("PBCT_BEGN_DTM", beg)
                 .queryParam("PBCT_CLS_DTM", end);
 
-        // 위험/불필요 파라미터는 전달 제외
-        extra.forEach((k, v) -> {
-            if (v != null && !v.isBlank()
-                    && !k.equalsIgnoreCase("serviceKey")
-                    && !k.equalsIgnoreCase("pageNo")
-                    && !k.equalsIgnoreCase("numOfRows")
-                    && !k.equalsIgnoreCase("DPSL_MTD_CD")
-                    && !k.equalsIgnoreCase("PBCT_BEGN_DTM")
-                    && !k.equalsIgnoreCase("PBCT_CLS_DTM")
-                    && !k.equalsIgnoreCase("q")
-                    && !k.equalsIgnoreCase("pbctno")) {
-                ub.queryParam(k, v);
-            }
-        });
+            extra.forEach((k,v) -> {
+                if (v != null && !v.isBlank()
+                 && !k.equalsIgnoreCase("serviceKey")
+                 && !k.equalsIgnoreCase("pageNo")
+                 && !k.equalsIgnoreCase("numOfRows")
+                 && !k.equalsIgnoreCase("DPSL_MTD_CD")
+                 && !k.equalsIgnoreCase("PBCT_BEGN_DTM")
+                 && !k.equalsIgnoreCase("PBCT_CLS_DTM")
+                 && !k.equalsIgnoreCase("q")
+                 && !k.equalsIgnoreCase("pbctno")) {
+                    ub.queryParam(k, v);
+                }
+            });
 
-        URI uri = ub.encode(StandardCharsets.UTF_8).build().toUri();
-        System.out.println("요청 URI(JSON 변환용): [" + uri.toString().replace(serviceKey, maskKey(serviceKey)) + "]");
+            URI uri = ub.encode(StandardCharsets.UTF_8).build().toUri();
+            System.out.println("요청 URI(JSON 변환용): [" + uri.toString().replace(serviceKey, maskKey(serviceKey)) + "]");
 
-        return webClient.get()
+            return webClient.get()
                 .uri(uri)
-                .accept(MediaType.APPLICATION_XML)
+                .accept(org.springframework.http.MediaType.APPLICATION_XML)
                 .exchangeToMono(res -> {
                     var headers = res.headers().asHttpHeaders();
                     return res.bodyToMono(byte[].class)
-                            .map(bytes -> com.of.util.Charsets.smartDecode(bytes, headers));
+                        .map(bytes -> com.of.util.Charsets.smartDecode(bytes, headers));
                 })
                 .block();
     }
