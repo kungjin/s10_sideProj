@@ -8,40 +8,56 @@ import Section from "../components/Section";
 import Stat from "../components/Stat";
 import SearchBar from "../components/SearchBar";
 import { getAuctions } from "../api/auctions";
+import { parseOnbidDate } from "../utils/onbid";
+
+// 🔹 상수: 3일(밀리초)
+const THREE_DAYS = 1000 * 60 * 60 * 24 * 3;
 
 // 작은 유틸
 const fmtPrice = (n) => n?.toLocaleString?.("ko-KR") + "원";
-const fmtDate = (d) => new Date(d).toLocaleDateString("ko-KR");
+const fmtDate = (d) =>
+  d instanceof Date ? d.toLocaleDateString("ko-KR") : "-";
 
 export default function Home() {
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-    // 🔹 검색 관련 기본값 (홈에서는 초기값만 있음)
+  // 🔹 검색 관련 기본값 (홈에서는 초기값만 있음)
   const q = "";
   const deadlineOnly = false;
 
-   // 🔹 검색 제출 시 Auctions 페이지로 이동
+  // 🔹 검색 제출 시 Auctions 페이지로 이동
   const handleSearchSubmit = (nextQ, nextDeadlineOnly) => {
     const sp = new URLSearchParams();
     if (nextQ) sp.set("q", nextQ);
     if (nextDeadlineOnly) sp.set("deadlineOnly", "1");
-    navigate(`/auctions?${sp.toString()}`); // 검색 결과 페이지로 이동
+    navigate(`/auctions?${sp.toString()}`);
   };
 
-
-  // 최근 공매 미리보기 (3개)
+  // 🔹 공매 데이터 가져와서: 날짜 정규화 → 마감 임박 순 정렬 → 상위 3개만 recent에 저장
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
-        const list = await getAuctions();
-        // 마감일 오름차순 정렬 후 상위 3개
-        const sorted = [...list].sort(
-          (a, b) => new Date(a.endDate) - new Date(b.endDate)
-        );
+        const list = await getAuctions(); // 원본 데이터 배열
+
+        // 1) 날짜 정규화: bidEndAt / endDate → endDate(Date 객체)로 통일
+        const normalized = list.map((v) => ({
+          ...v,
+          endDate: parseOnbidDate(v.bidEndAt ?? v.endDate),
+        }));
+
+        // 2) endDate 있는 것만, 마감일 가까운 순으로 정렬
+        const sorted = normalized
+          .filter((v) => v.endDate instanceof Date)
+          .sort((a, b) => a.endDate - b.endDate);
+
+        // 3) 상위 3개만 사용 (마감 임박 3개)
         setRecent(sorted.slice(0, 3));
+      } catch (err) {
+        console.error(err);
+        setRecent([]);
       } finally {
         setLoading(false);
       }
@@ -79,7 +95,8 @@ export default function Home() {
                 initial={q}
                 initialDeadlineOnly={deadlineOnly}
                 onSubmit={handleSearchSubmit}
-                placeholder="주소/물건명 검색" />
+                placeholder="주소/물건명 검색"
+              />
               <div className="text-xs text-subink mt-2">
                 예) “화성시 장안면”, “근린생활시설”, “토지/임야”
               </div>
@@ -170,45 +187,90 @@ export default function Home() {
               <Card>불러오는 중…</Card>
             </>
           )}
-          {!loading && recent.length === 0 && <Card>표시할 항목이 없습니다.</Card>}
+
+          {!loading && recent.length === 0 && (
+            <Card>표시할 항목이 없습니다.</Card>
+          )}
+
           {!loading &&
-            recent.map((v) => (
-              <Card key={v.id}>
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <Link
-                      to={`/auctions/${v.id}`}
-                      className="font-semibold hover:underline"
-                    >
-                      {v.title}
-                    </Link>
-                    <div className="text-sm text-subink mt-1">{v.category}</div>
+            recent.map((v, idx) => {
+              // 온비드/스네이크케이스까지 고려한 id 구성
+              const notice = v.noticeNo ?? v.notice_no;
+              const item = v.itemNo ?? v.item_no;
+
+              // 🔑 key 생성: 온비드 → 예전 mock → idx 순서
+              const base =
+                notice && item
+                  ? `${notice}-${item}` // 온비드 진짜 복합키
+                  : v.id
+                    ? `id-${v.id}` // 예전 mock 데이터용
+                    : "no-id"; // 아무 식별자 없을 때
+
+              const key = `${base}-${idx}`;
+
+              // 🔹 위 useEffect에서 정규화한 Date 객체
+              const endDate = v.endDate;
+
+              // 🔹 최저입찰가 필드 통합
+              const minBid = v.minBidPrice ?? v.minBid;
+
+              // 🔹 상세 페이지 링크도 동일 기준으로 맞추기
+              const detailHref = `/auctions/${v.id ?? idx}`;
+              
+              return (
+                <Card key={key}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <Link
+                        to={detailHref}
+                        className="font-semibold hover:underline"
+                      >
+                        {v.title}
+                      </Link>
+                      <div className="text-sm text-subink mt-1">
+                        {v.category ?? v.usageName}
+                      </div>
+                    </div>
+
+                    {endDate && (
+                      <Badge
+                        tone={
+                          endDate - Date.now() < THREE_DAYS
+                            ? "danger"
+                            : "info"
+                        }
+                      >
+                        {fmtDate(endDate)} 마감
+                      </Badge>
+                    )}
                   </div>
-                  <Badge
-                    tone={
-                      new Date(v.endDate) - Date.now() < 1000 * 60 * 60 * 24 * 3
-                        ? "danger"
-                        : "info"
-                    }
-                  >
-                    {fmtDate(v.endDate)} 마감
-                  </Badge>
-                </div>
 
-                <div className="mt-3 text-sm">
-                  최저입찰가 <span className="font-semibold">{fmtPrice(v.minBid)}</span>
-                </div>
+                  {minBid != null && (
+                    <div className="mt-3 text-sm">
+                      최저입찰가{" "}
+                      <span className="font-semibold">
+                        {fmtPrice(minBid)}
+                      </span>
+                    </div>
+                  )}
 
-                <div className="mt-4 flex gap-2">
-                  <Link to={`/auctions/${v.id}`} className="btn btn-primary flex-1 text-center">
-                    상세
-                  </Link>
-                  <Link to="/auctions" className="btn btn-ghost flex-1 text-center">
-                    더보기
-                  </Link>
-                </div>
-              </Card>
-            ))}
+                  <div className="mt-4 flex gap-2">
+                    <Link
+                      to={detailHref}
+                      className="btn btn-primary flex-1 text-center"
+                    >
+                      상세
+                    </Link>
+                    <Link
+                      to="/auctions"
+                      className="btn btn-ghost flex-1 text-center"
+                    >
+                      더보기
+                    </Link>
+                  </div>
+                </Card>
+              );
+            })}
         </div>
       </Section>
 
@@ -233,8 +295,8 @@ export default function Home() {
           <Card className="p-5">
             <h4 className="font-semibold">어떤 필터가 제공되나요?</h4>
             <p className="text-sm text-subink mt-2">
-              주소/물건명 검색과 “마감 임박” 토글을 지원합니다. 향후 지역/유형/가격 필터를
-              추가할 예정입니다.
+              주소/물건명 검색과 “마감 임박” 토글을 지원합니다. 향후
+              지역/유형/가격 필터를 추가할 예정입니다.
             </p>
           </Card>
         </div>
@@ -268,14 +330,24 @@ function DotIcon() {
 function BoltIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" strokeWidth="2" fill="none" />
+      <path
+        d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
     </svg>
   );
 }
 function ShieldIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z" stroke="currentColor" strokeWidth="2" fill="none" />
+      <path
+        d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
     </svg>
   );
 }

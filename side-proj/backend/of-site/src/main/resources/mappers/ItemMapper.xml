@@ -5,7 +5,7 @@
 <mapper namespace="com.of.mapper.ItemMapper">
 
   <insert id="upsertItem" parameterType="com.of.domain.Item">
-    INSERT INTO item_current (
+  INSERT INTO item_current (
     source, notice_no, item_no, title, addr_lot, addr_road, usage_name,
     sale_type, min_bid_price, appraisal_amt,
     bid_start_at, bid_end_at, status_name,
@@ -32,7 +32,28 @@
     view_count    = VALUES(view_count),
     content_hash  = IF(VALUES(content_hash) != content_hash, VALUES(content_hash), content_hash),
     updated_at    = IF(VALUES(content_hash) != content_hash, NOW(6), updated_at),
-    missing_count = 0;
-  </insert>
+    missing_count = 0
+</insert>
 
+<!-- 🔹 조회용: 마감 임박 순으로 상위 N개 가져오기 -->
+  <select id="findRecent" resultType="com.of.dto.OnbidItemDto">
+  SELECT
+    notice_no    AS noticeNo,
+    item_no      AS itemNo,
+    title        AS title,
+    addr_road    AS addrRoad,
+    usage_name   AS usageName,
+    sale_type    AS saleType,
+    min_bid_price AS minBidPrice,
+    appraisal_amt AS appraisalAmt,
+    DATE_FORMAT(bid_start_at, '%Y%m%d%H%i%S') AS bidStartAt,
+    DATE_FORMAT(bid_end_at,   '%Y%m%d%H%i%S') AS bidEndAt,
+    status_name  AS statusName,
+    failed_count AS failedCount,
+    view_count   AS viewCount
+  FROM item_current
+  WHERE bid_end_at IS NOT NULL
+  ORDER BY bid_end_at ASC
+  LIMIT #{limit}
+</select>
 </mapper>
