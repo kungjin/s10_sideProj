@@ -168,4 +168,45 @@ COMMIT;
 -- 취소하려면
 -- ROLLBACK;
   
-  
+
+CREATE TABLE member (
+    id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+
+    -- 계정 정보
+    email           VARCHAR(100) NOT NULL UNIQUE,
+    password_hash   VARCHAR(255) NOT NULL,
+
+    -- 기본 신상
+    name            VARCHAR(50)  NOT NULL,
+    birth_date      DATE         NOT NULL,
+    nationality     VARCHAR(50)  NOT NULL,
+    phone           VARCHAR(20)  NOT NULL,
+    gender          ENUM('M', 'F', 'OTHER') NOT NULL,
+
+    -- 권한/가입일자
+    role            VARCHAR(20) NOT NULL DEFAULT 'USER',
+    created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO member (
+    email,
+    password_hash,
+    name,
+    birth_date,
+    nationality,
+    phone,
+    gender,
+    created_at
+) VALUES (
+    'test@test.com',
+    '1234',  -- 임시 (안 써도 됨)
+    '홍길동',
+    '1996-05-10',
+    'KOR',
+    '010-1234-5678',
+    'M',
+    NOW()
+);
+
+SELECT*FROM member;

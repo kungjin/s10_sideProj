@@ -1,59 +1,103 @@
-<!-- src/main/resources/mappers/ItemMapper.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.of.mapper.ItemMapper">
 
-  <insert id="upsertItem" parameterType="com.of.domain.Item">
-  INSERT INTO item_current (
-    source, notice_no, item_no, title, addr_lot, addr_road, usage_name,
-    sale_type, min_bid_price, appraisal_amt,
-    bid_start_at, bid_end_at, status_name,
-    failed_count, view_count, content_hash, updated_at, missing_count
-  )
-  VALUES (
-    #{source}, #{noticeNo}, #{itemNo}, #{title}, #{addrLot}, #{addrRoad}, #{usageName},
-    #{saleType}, #{minBidPrice}, #{appraisalAmt},
-    #{bidStartAt}, #{bidEndAt}, #{statusName},
-    #{failedCount}, #{viewCount}, #{contentHash}, NOW(6), 0
-  )
-  ON DUPLICATE KEY UPDATE
-    title         = VALUES(title),
-    addr_lot      = VALUES(addr_lot),
-    addr_road     = VALUES(addr_road),
-    usage_name    = VALUES(usage_name),
-    sale_type     = VALUES(sale_type),
-    min_bid_price = VALUES(min_bid_price),
-    appraisal_amt = VALUES(appraisal_amt),
-    bid_start_at  = VALUES(bid_start_at),
-    bid_end_at    = VALUES(bid_end_at),
-    status_name   = VALUES(status_name),
-    failed_count  = VALUES(failed_count),
-    view_count    = VALUES(view_count),
-    content_hash  = IF(VALUES(content_hash) != content_hash, VALUES(content_hash), content_hash),
-    updated_at    = IF(VALUES(content_hash) != content_hash, NOW(6), updated_at),
-    missing_count = 0
-</insert>
+    <!-- 1) 홈 미리보기용: 마감 임박 N개 -->
+    <select id="selectImminent" resultType="com.of.dto.OnbidItemDto">
+        SELECT
+            notice_no      AS noticeNo,
+            item_no        AS itemNo,
+            title          AS title,
+            addr_road      AS addrRoad,
+            usage_name     AS usageName,
+            sale_type      AS saleType,
+            min_bid_price  AS minBidPrice,
+            appraisal_amt  AS appraisalAmt,
+            bid_start_at   AS bidStartAt,
+            bid_end_at     AS bidEndAt,
+            status_name    AS statusName,
+            failed_count   AS failedCount,
+            view_count     AS viewCount
+        FROM item_current
+        WHERE bid_end_at IS NOT NULL
+          AND bid_end_at >= NOW()
+        ORDER BY bid_end_at ASC
+        LIMIT #{limit}
+    </select>
 
-<!-- 🔹 조회용: 마감 임박 순으로 상위 N개 가져오기 -->
-  <select id="findRecent" resultType="com.of.dto.OnbidItemDto">
-  SELECT
-    notice_no    AS noticeNo,
-    item_no      AS itemNo,
-    title        AS title,
-    addr_road    AS addrRoad,
-    usage_name   AS usageName,
-    sale_type    AS saleType,
-    min_bid_price AS minBidPrice,
-    appraisal_amt AS appraisalAmt,
-    DATE_FORMAT(bid_start_at, '%Y%m%d%H%i%S') AS bidStartAt,
-    DATE_FORMAT(bid_end_at,   '%Y%m%d%H%i%S') AS bidEndAt,
-    status_name  AS statusName,
-    failed_count AS failedCount,
-    view_count   AS viewCount
-  FROM item_current
-  WHERE bid_end_at IS NOT NULL
-  ORDER BY bid_end_at ASC
-  LIMIT #{limit}
-</select>
+    <!-- 2) 전체 조회 (백업용/디버깅용) -->
+    <select id="selectAll" resultType="com.of.dto.OnbidItemDto">
+        SELECT
+            notice_no      AS noticeNo,
+            item_no        AS itemNo,
+            title          AS title,
+            addr_road      AS addrRoad,
+            usage_name     AS usageName,
+            sale_type      AS saleType,
+            min_bid_price  AS minBidPrice,
+            appraisal_amt  AS appraisalAmt,
+            bid_start_at   AS bidStartAt,
+            bid_end_at     AS bidEndAt,
+            status_name    AS statusName,
+            failed_count   AS failedCount,
+            view_count     AS viewCount
+        FROM item_current
+        ORDER BY bid_end_at ASC
+    </select>
+
+    <!-- 3) /api/auctions?limit=&q=&deadlineOnly= -->
+    <select id="selectAuctions" resultType="com.of.dto.OnbidItemDto">
+        SELECT
+            notice_no      AS noticeNo,
+            item_no        AS itemNo,
+            title          AS title,
+            addr_road      AS addrRoad,
+            usage_name     AS usageName,
+            sale_type      AS saleType,
+            min_bid_price  AS minBidPrice,
+            appraisal_amt  AS appraisalAmt,
+            bid_start_at   AS bidStartAt,
+            bid_end_at     AS bidEndAt,
+            status_name    AS statusName,
+            failed_count   AS failedCount,
+            view_count     AS viewCount
+        FROM item_current
+        WHERE 1 = 1
+        <!-- q 검색: 제목 + 지번 + 도로명 + 용도 -->
+        <if test="q != null and q != ''">
+            AND (
+                title       LIKE CONCAT('%', #{q}, '%')
+                OR addr_lot    LIKE CONCAT('%', #{q}, '%')
+                OR addr_road   LIKE CONCAT('%', #{q}, '%')
+                OR usage_name  LIKE CONCAT('%', #{q}, '%')
+            )
+        </if>
+        
+        <choose>
+    <!-- 가격순 (최저입찰가 오름차순, 0 / NULL 은 뒤쪽으로 밀고 싶으면 추가 로직 가능) -->
+    <when test="sort == 'price'">
+      ORDER BY
+        min_bid_price ASC,
+        bid_end_at ASC
+    </when>
+
+    <!-- 마감 임박순 -->
+    <when test="sort == 'deadline'">
+      ORDER BY
+        bid_end_at ASC
+    </when>
+
+    <!-- 기본: 최신 업데이트 순 -->
+    <otherwise>
+      ORDER BY
+        updated_at DESC
+    </otherwise>
+  </choose>
+
+    </select>
 </mapper>
+
+

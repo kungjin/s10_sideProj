@@ -5,6 +5,8 @@ import Home from "./pages/Home.jsx";
 import Auctions from "./pages/Auctions.jsx";
 import AuctionDetail from "./pages/AuctionDetail.jsx";
 import AuctionsRaw from "./pages/AuctionsRaw.jsx"; // 디버그용
+import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
 
 export default function RoutesConfig() {
   return (
@@ -24,6 +26,10 @@ export default function RoutesConfig() {
 
         {/* 그 외 → 홈 */}
         <Route path="*" element={<Home />} />
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/signup" element={<Signup />} />
       </Route>
     </Routes>
   );

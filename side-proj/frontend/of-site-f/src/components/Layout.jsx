@@ -9,7 +9,9 @@ export default function Layout() {
             <span className="w-5 h-5 rounded-full bg-primary inline-block" />
             <span className="font-semibold tracking-tight">Onbid Finder</span>
           </Link>
-          <nav className="flex items-center gap-2">
+          <nav className="flex items-center gap-2">            
+            <NavLink to="/login" className="text-xs font-semibold mr-1">Log in</NavLink>
+            <NavLink to="/signup" className="text-xs font-semibold mr-1">Sign Up</NavLink>
             <NavLink to="/auctions" className="btn btn-ghost">공매 탐색</NavLink>
             <a className="btn btn-ghost" href="#">가이드</a>
           </nav>

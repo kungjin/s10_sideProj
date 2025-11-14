@@ -10,15 +10,22 @@ import java.util.List;
 @Mapper
 public interface ItemMapper {
 
-    // 수집용: 정규화된 Item 도메인 UPSERT
-    int upsertItem(Item item);
+    /** 마감 임박 N개 (홈 미리보기용) */
+    List<OnbidItemDto> selectImminent(@Param("limit") int limit);
 
-    // 프론트 조회용: 최근 공매 리스트
-    List<OnbidItemDto> findRecent(@Param("limit") int limit);
+    /** 전체 공매 목록 */
+    List<OnbidItemDto> selectAll();
 
-    // 프론트 조회용: 상세
-    OnbidItemDto findOne(
-            @Param("noticeNo") long noticeNo,
-            @Param("itemNo") long itemNo
+    /** /api/auctions 검색용 (limit + q + deadlineOnly) */
+    List<OnbidItemDto> selectAuctions(
+        @Param("limit") int limit,
+        @Param("q") String q,
+        @Param("deadlineOnly") boolean deadlineOnly,
+        @Param("sort") String sort 
     );
+
+    /** 수집 시 item_current upsert용 */
+    int upsertItem(Item it);
 }
+
+

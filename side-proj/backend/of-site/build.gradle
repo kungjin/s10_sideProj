@@ -28,7 +28,11 @@ dependencies {
     // MVC
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-
+    
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+	
+	
     // MyBatis
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
 
@@ -38,7 +42,7 @@ dependencies {
     // implementation 'org.apache.httpcomponents.client5:httpclient5'
 
     // === Jackson XML (외부 XML 파싱 필요 시)
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.19.2'
     // org.json은 가능하면 제거 (Jackson으로 대체 가능)
     implementation 'org.json:json:20231013'
 

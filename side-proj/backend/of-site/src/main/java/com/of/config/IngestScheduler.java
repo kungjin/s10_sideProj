@@ -21,7 +21,7 @@ public class IngestScheduler {
     public void syncDaily() {
         Map<String, String> params = Map.of(
                 "pageNo", "1",
-                "numOfRows", "10"
+                "numOfRows", "30"
                 // TODO: 필요하면 지역/상태 필터 더 추가
         );
         int count = ingestService.ingestOnce(params);
