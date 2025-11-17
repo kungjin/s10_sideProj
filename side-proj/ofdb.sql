@@ -210,3 +210,22 @@ INSERT INTO member (
 );
 
 SELECT*FROM member;
+
+
+SELECT source, notice_no, item_no
+FROM item_current
+ORDER BY notice_no, item_no
+LIMIT 50;
+
+SELECT COUNT(*) FROM item_current;
+
+SELECT COUNT(*)
+FROM item_current
+WHERE notice_no = 9960416;
+
+SELECT source, notice_no, item_no, title, updated_at
+FROM item_current
+ORDER BY notice_no, item_no
+LIMIT 50;
+
+SELECT * FROM member WHERE email = '네가 폼에 적은 이메일';

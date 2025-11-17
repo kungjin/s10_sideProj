@@ -4889,3 +4889,8 @@ java.lang.IllegalArgumentException: 비밀번호가 일치하지 않습니다.
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
 
+2025-11-17T17:30:18.001+09:00  INFO 12960 --- [of-site] [RMI TCP Connection(182)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-11-17T17:30:18.003+09:00  INFO 12960 --- [of-site] [RMI TCP Connection(182)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-17T17:30:18.006+09:00  INFO 12960 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-17T17:30:18.008+09:00  INFO 12960 --- [of-site] [RMI TCP Connection(182)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2025-11-17T17:30:18.010+09:00  INFO 12960 --- [of-site] [RMI TCP Connection(182)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
