@@ -1,11 +1,16 @@
 package com.of.controller;
 
-import com.of.service.IngestService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.of.service.IngestService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,20 +24,41 @@ public class PublicController {
      * 예: GET http://localhost:8095/api/public/ingest
      */
     @GetMapping("/ingest")
-    public ResponseEntity<?> ingest() {
-        // 요청 파라미터 구성 (원하면 프론트에서 동적으로 받을 수도 있음)
+    public Map<String, Object> ingestOnce(
+            @RequestParam(defaultValue = "1") int pageNo,
+            @RequestParam(defaultValue = "50") int numOfRows
+    ) {
         Map<String, String> params = Map.of(
-                "pageNo", "1",
-                "numOfRows", "10",
-                "DPSL_MTD_CD", "0001",         // 매각 방식 (0001: 매각, 0002: 임대)
-                "PBCT_BEGN_DTM", "20250801",   // 공고 시작일
-                "PBCT_CLS_DTM", "20251110"     // 공고 마감일
+                "pageNo", String.valueOf(pageNo),
+                "numOfRows", String.valueOf(numOfRows),
+                "DPSL_MTD_CD", "0001",       // 매각
+                "PBCT_BEGN_DTM", "20250801", // 공고 시작일 (원하면 나중에 파라미터로 뺄 수 있음)
+                "PBCT_CLS_DTM", "20251231"  // 공고 마감일
         );
 
-        int inserted = ingestService.ingestOnce(params);
-        return ResponseEntity.ok(Map.of(
+        int inserted = ingestService.ingestOnce(params);  // ← 여기서 upsert 수행
+        return Map.of(
                 "result", "success",
                 "inserted", inserted
-        ));
+        );
+    }
+
+    /** ② 여러 페이지 한번에 수집 (insert+update=upsert)
+     *   예: POST http://localhost:8095/api/public/ingest/bulk?startPage=1&endPage=3
+     */
+    @PostMapping("/ingest/bulk")
+    public Map<String, Object> ingestBulk(
+            @RequestParam(defaultValue = "1") int startPage,
+            @RequestParam(defaultValue = "3") int endPage
+    ) {
+        int total = ingestService.ingestMany(startPage, endPage);
+        return Map.of(
+                "result", "success",
+                "rows", total
+        );
     }
 }
+   
+
+
+

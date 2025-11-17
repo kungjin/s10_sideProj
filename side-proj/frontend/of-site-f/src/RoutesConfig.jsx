@@ -7,9 +7,12 @@ import AuctionDetail from "./pages/AuctionDetail.jsx";
 import AuctionsRaw from "./pages/AuctionsRaw.jsx"; // 디버그용
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import AuthProvider from "./context/AuthContext";
+import Guide from "./pages/Guide.jsx";
 
 export default function RoutesConfig() {
   return (
+    <AuthProvider>
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* 홈 */}
@@ -27,11 +30,15 @@ export default function RoutesConfig() {
         {/* 그 외 → 홈 */}
         <Route path="*" element={<Home />} />
 
-        <Route path="/login" element={<Login />} />
+        <Route path="login" element={<Login />} />
 
-        <Route path="/signup" element={<Signup />} />
+        <Route path="signup" element={<Signup />} />
+
+        <Route path="guide" element={<Guide />} />
+
       </Route>
     </Routes>
+  </AuthProvider>
   );
 }
 

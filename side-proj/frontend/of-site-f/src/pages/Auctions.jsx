@@ -7,6 +7,8 @@ import Card from "../components/Card";
 import SearchBar from "../components/SearchBar";
 import { parseOnbidDate } from "../utils/onbid";
 
+const PAGE_SIZE = 12; // 🔹 한 페이지당 12개
+
 // 🔹 안전한 가격 추출 (문자열/nullable 다 커버)
 const safePrice = (item) => {
   const raw =
@@ -64,6 +66,10 @@ export default function Auctions() {
   const q = (searchParams.get("q") || "").trim();
   const deadlineOnly = (searchParams.get("deadlineOnly") || "") === "1";
   const sort = searchParams.get("sort") || "latest"; // latest | price | deadline
+
+  const pageParam = parseInt(searchParams.get("page") || "1", 10);
+  const page =
+    Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
 
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -196,6 +202,9 @@ export default function Auctions() {
     if (nextDeadlineOnly) sp.set("deadlineOnly", "1");
     else sp.delete("deadlineOnly");
 
+    // 검색하면 항상 page 1부터
+    sp.delete("page");
+
     setSearchParams(sp, { replace: false });
 
     if (location.pathname !== "/auctions") {
@@ -211,10 +220,26 @@ export default function Auctions() {
     } else {
       sp.set("sort", nextSort);
     }
+    sp.delete("page"); // 정렬 바꾸면 1페이지로
     setSearchParams(sp, { replace: false });
   };
 
   const sortValue = sort || "latest";
+
+  // 🔹 페이지네이션 계산
+  const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const startIdx = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = list.slice(startIdx, startIdx + PAGE_SIZE);
+
+  // 🔹 페이지 변경
+  const handlePageChange = (nextPage) => {
+    if (nextPage < 1 || nextPage > totalPages) return;
+    const sp = new URLSearchParams(searchParams);
+    if (nextPage === 1) sp.delete("page");
+    else sp.set("page", String(nextPage));
+    setSearchParams(sp, { replace: false });
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-5 py-10">
@@ -275,10 +300,59 @@ export default function Auctions() {
 
         {!loading &&
           !err &&
-          list.map((item) => (
+          pageItems.map((item) => (
             <AuctionCard key={item.uid} item={item} />
           ))}
       </div>
+        {/* 페이지네이션 */}
+      {!loading && !err && list.length > 0 && (
+        <div className="mt-6 flex justify-center items-center gap-1 text-sm">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={
+              "px-3 py-1 rounded-full border " +
+              (currentPage === 1
+                ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50")
+            }
+          >
+            이전
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => {
+            const p = i + 1;
+            const isActive = p === currentPage;
+            return (
+              <button
+                key={p}
+                onClick={() => handlePageChange(p)}
+                className={
+                  "px-3 py-1 rounded-full border " +
+                  (isActive
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50")
+                }
+              >
+                {p}
+              </button>
+            );
+          })}
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={
+              "px-3 py-1 rounded-full border " +
+              (currentPage === totalPages
+                ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50")
+            }
+          >
+            다음
+          </button>
+        </div>
+      )}
     </div>
   );
 }

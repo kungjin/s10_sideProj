@@ -6,6 +6,31 @@ import { parseOnbidDate } from "../utils/onbid";
 
 const fmtKrw = new Intl.NumberFormat("ko-KR");
 
+function getFakeThumbnail(item) {
+  // 1) 실제 이미지가 있으면 그것 사용
+  if (item?.thumbnail) return item.thumbnail;
+
+  // 2) 아이템별 랜덤 색상 박스 (stable hash)
+  const palette = [
+    "#dbeafe", // light blue
+    "#ffe4e6", // rose
+    "#fef9c3", // yellow
+    "#dcfce7", // green
+    "#fae8ff", // purple
+  ];
+
+  const idx = (item?.itemNo ?? 0) % palette.length;
+
+  // 3) SVG placeholder
+  return `data:image/svg+xml;utf8,
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+  <rect width="100%" height="100%" fill="${palette[idx]}" />
+  <text x="50%" y="50%" font-size="14" text-anchor="middle" fill="#555" dy="5">
+    OF
+  </text>
+</svg>`;
+}
+
 function toSafeDate(item) {
   if (!item) return null;
 
@@ -82,6 +107,8 @@ export default function AuctionCard({
   const category = item?.category ?? item?.usageName ?? "-";
   const address = item?.address ?? item?.addrRoad;
 
+  const thumbnail = getFakeThumbnail(item);
+
   return (
     <Card
       className={[
@@ -90,7 +117,16 @@ export default function AuctionCard({
         className,
       ].join(" ")}
     >
-      <div className="flex items-start justify-between gap-4">
+        {/* 🔹 썸네일 */}
+      <div className="flex-shrink-0 mb-3 md:mb-0">
+        <img
+          src={thumbnail}
+          alt="thumbnail"
+          className="w-auto h-50 rounded-lg object-cover bg-gray-100"
+        />
+      </div>
+       {/* 🔹 메인 내용 */}
+      <div className="flex items-start justify-between gap-4 mt-3">
         <div className="min-w-0">
           <Link
             to={`/auctions/${item?.id}`}

@@ -278,7 +278,7 @@ export default function Home() {
       <Section className="py-10">
         <div className="grid sm:grid-cols-3 gap-3">
           <Stat label="금주 마감" value={`${recent.length}건`} />
-          <Stat label="평균 최저가(샘플)" value="418,000,000원" />
+          <Stat label="평균 최저가" value="418,000,000원" />
           <Stat label="연동 예정" value="Onbid API" />
         </div>
       </Section>

@@ -20,7 +20,7 @@ import java.util.Map;
 public class IngestService {
 
     private static final String SRC = "ONBID";
-
+    
     private final FetchService fetch;
     private final StagingMapper stagingMapper;
     private final ItemMapper itemMapper;
@@ -150,7 +150,9 @@ public class IngestService {
         it.setFailedCount(dto.getFailedCount());
         it.setViewCount(dto.getViewCount());
         it.setContentHash(sha256(canonical(it)));
-
+        
+        it.setMissingCount(0);
+        
         // 4) UPSERT
         try {
             return itemMapper.upsertItem(it);
@@ -232,6 +234,24 @@ public class IngestService {
         }
         return root;
     }
+
+    @Transactional
+    public int ingestMany(int startPage, int endPage) {
+        int total = 0;
+
+        for (int p = startPage; p <= endPage; p++) {
+            Map<String, String> params = Map.of(
+                    "pageNo", String.valueOf(p),
+                    "numOfRows", "10",        // 필요하면 파라미터로 뺄 수 있음
+                    "DPSL_MTD_CD", "0001",
+                    "PBCT_BEGN_DTM", "20250801",
+                    "PBCT_CLS_DTM", "20251110"
+            );
+            total += ingestOnce(params);      // ← 여기 안에서 이미 upsert 흐름 다 타고 있음
+        }
+
+        return total;
+	}
 }
 
 

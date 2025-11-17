@@ -4,6 +4,7 @@ const client = axios.create({
   baseURL: "http://127.0.0.1:8095/api",
   timeout: 60000, // ⬆ 60s
   headers: { Accept: "application/json" },
+  withCredentials: true,  // ⭐ 세션 쿠키 주고받기
 });
 
 // (선택) 아주 간단한 재시도 1~2회

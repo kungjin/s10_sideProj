@@ -11,12 +11,12 @@ public class MemberResponse {
     private Long id;
     private String email;
     private String name;
-    private String birth;          // ← Member의 birth 이름과 맞춰야 함
+    private String birth;          // 프론트에서 쓸 필드명
     private String nationality;
     private String phone;
     private String gender;
     private String role;
-    private String createdAt;      // ← 프론트용이므로 String이 더 좋음
+    private String createdAt;      // "yyyy-MM-dd HH:mm:ss" 포맷 문자열
 
     public static MemberResponse from(Member m) {
         MemberResponse dto = new MemberResponse();
@@ -24,13 +24,12 @@ public class MemberResponse {
         dto.setId(m.getId());
         dto.setEmail(m.getEmail());
         dto.setName(m.getName());
-        dto.setBirth(m.getBirthDate());
+        dto.setBirth(m.getBirthDate());          // String → String 그대로
         dto.setNationality(m.getNationality());
         dto.setPhone(m.getPhone());
         dto.setGender(m.getGender());
         dto.setRole(m.getRole());
 
-        // LocalDateTime → String 변환
         if (m.getCreatedAt() != null) {
             dto.setCreatedAt(
                 m.getCreatedAt().format(
@@ -42,4 +41,3 @@ public class MemberResponse {
         return dto;
     }
 }
-

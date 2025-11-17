@@ -1,11 +1,15 @@
-// src/pages/Login.jsx
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import client from "../api/client";               // 네 axios 인스턴스
+import { AuthContext } from "../context/AuthContext";
+
 // TODO: 실제 구현한 API 헬퍼에 맞게 import
 // import { login } from "../api/auth";
 
 export default function Login() {
   const navigate = useNavigate();
+   const { login } = useContext(AuthContext);
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -33,9 +37,17 @@ export default function Login() {
     setError("");
     setLoading(true);
     try {
-      // TODO: 실제 로그인 API 붙일 때 사용
-      // await login({ email: form.email, password: form.password });
-      // 로그인 성공 후 홈으로 이동
+      // ⭐ 실제 백엔드 로그인 호출
+      const res = await client.post("/auth/login", {
+        email: form.email,
+        password: form.password,
+      });
+      // res.data = MemberResponse (id, email, name, ...)
+
+      // ⭐ AuthContext에 로그인 정보 저장
+      login(res.data);
+
+      // ⭐ 로그인 성공 후 이동
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -90,7 +102,8 @@ export default function Login() {
         <div className="px-10 py-12">
           <h2 className="text-xl font-semibold mb-6">Log in</h2>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+
+          <form className="space-y-4" autoComplete="on" onSubmit={handleSubmit} >
             <div className="space-y-1">
               <label className="text-xs font-medium text-subink">
                 EMAIL
