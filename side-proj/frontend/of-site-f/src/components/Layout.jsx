@@ -33,7 +33,7 @@ export default function Layout() {
                     text-xs font-semibold mr-1
                     flex items-center gap-1
                     text-slate-800 cursor-pointer
-                    hover:text-[#1D4ED8]
+                    hover:text-primary
                       py-1
                        "
                   >
@@ -76,10 +76,10 @@ export default function Layout() {
             )}
 
             {/* 너가 만든 기존 메뉴 */}
-            <NavLink to="/auctions" className="btn btn-ghost">
+            <NavLink to="/auctions" className="btn btn-ghost bg-primary text-white">
               공매 탐색
             </NavLink>
-            <NavLink to="/guide" className="btn btn-ghost">
+            <NavLink to="/guide" className="btn btn-ghost bg-animated-gradient text-white">
               가이드
             </NavLink>
           </nav>

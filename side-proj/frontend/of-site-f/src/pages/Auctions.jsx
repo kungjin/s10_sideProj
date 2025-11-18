@@ -5,58 +5,13 @@ import { getAuctions } from "../api/auctions";
 import AuctionCard from "../components/AuctionCard";
 import Card from "../components/Card";
 import SearchBar from "../components/SearchBar";
-import { parseOnbidDate } from "../utils/onbid";
+import { safePrice,safeEndDate,safeStartDate,normalizeAuctionItem } from "../utils/auctionNormalize";
 
 const PAGE_SIZE = 12; // 🔹 한 페이지당 12개
 
-// 🔹 안전한 가격 추출 (문자열/nullable 다 커버)
-const safePrice = (item) => {
-  const raw =
-    item?.minBid ??
-    item?.minBidPrice ??
-    item?.min_bid_price ??
-    item?.minPrice ??
-    item?.min_price ??
-    0;
 
-  const n = Number(raw);
-  return Number.isFinite(n) ? n : 0;
-};
 
-// 🔹 마감일 Date 추출: DB DATETIME + ONBID 문자열 둘 다 지원
-const safeEndDate = (item) => {
-  if (!item) return null;
 
-  const raw = item.bidEndAt ?? item.bid_end_at ?? item.endDate ?? item.end_date;
-  if (!raw) return null;
-
-  // 1) DB DATETIME (“2025-11-15 15:24:52.000000”)
-  const d1 = new Date(raw);
-  if (!isNaN(d1.getTime())) return d1;
-
-  // 2) 안 되면 ONBID(YYYYMMDDHHMMSS) 포맷으로 시도
-  const d2 = parseOnbidDate(raw);
-  if (d2 && !isNaN(d2.getTime())) return d2;
-
-  return null;
-};
-
-// 🔹 시작일 Date 추출
-const safeStartDate = (item) => {
-  if (!item) return null;
-
-  const raw =
-    item.bidStartAt ?? item.bid_start_at ?? item.startDate ?? item.start_date;
-  if (!raw) return null;
-
-  const d1 = new Date(raw);
-  if (!isNaN(d1.getTime())) return d1;
-
-  const d2 = parseOnbidDate(raw);
-  if (d2 && !isNaN(d2.getTime())) return d2;
-
-  return null;
-};
 
 export default function Auctions() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -100,36 +55,9 @@ export default function Auctions() {
         console.log("[Auctions] raw sample =", raw?.[0]);
 
         // 1) 공통 필드 normalize
-        const normalized = (raw || []).map((item, idx) => {
-          const noticeNo = item.noticeNo ?? item.notice_no;
-          const itemNo = item.itemNo ?? item.item_no;
-
-          const endDate = safeEndDate(item);
-          const startDate = safeStartDate(item);
-
-          return {
-            ...item,
-            // ✅ 디테일 링크용 id, 카드 key용 uid
-            id:
-              item.id ??
-              (noticeNo && itemNo
-                ? `${noticeNo}-${itemNo}`
-                : `idx-${idx}`),
-            uid:
-              item.uid ??
-              (noticeNo && itemNo
-                ? `${noticeNo}-${itemNo}`
-                : `idx-${idx}`),
-
-            // 정렬용/카드용 공통 필드
-            minBid: safePrice(item),
-            endDate,
-            endDateISO: endDate ? endDate.toISOString() : null,
-            startDate,
-            address: item.addrRoad ?? item.address,
-            category: item.usageName ?? item.category,
-          };
-        });
+        const normalized = raw.map((it, idx) =>
+          normalizeAuctionItem(it, idx)
+        );
 
         // 2) 프론트에서 검색 필터 (주소/물건명/카테고리)
         const filtered = q

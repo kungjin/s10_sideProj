@@ -1,0 +1,119 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.of.mapper.StatsMapper">
+
+  <!--
+    AuctionStatsDto 매핑
+    - SELECT에서 alias로 넘겨준 컬럼 이름 ↔ DTO 필드 이름 연결
+  -->
+  <resultMap id="AuctionStatsMap" type="com.of.dto.AuctionStatsDto">
+    <!-- 전체 공매 수 -->
+    <result property="totalCount"      column="totalCount" />
+
+    <!-- 오늘 마감되는 공매 수 -->
+    <result property="closingToday"    column="closingToday" />
+
+    <result property="closingThisWeek" column="closingThisWeek" />
+
+    <!-- 최저입찰가 평균 -->
+    <result property="avgMinBid"       column="avgMinBid" />
+
+    <!-- 가장 물건이 많이 몰린 지역명 (예: 서울특별시, 경기도 등) -->
+    <result property="topRegion"       column="topRegion" />
+
+    <!-- 그 지역에 속한 물건 개수 -->
+    <result property="topRegionCount"  column="topRegionCount" />
+  </resultMap>
+
+  <!--
+    공매 전체 통계 조회
+    - item_current 테이블을 기준으로 집계
+    - 개수/평균/지역 분포 등을 한 번에 계산해서 AuctionStatsDto로 반환
+  -->
+  <select id="selectAuctionStats" resultMap="AuctionStatsMap">
+    SELECT
+      /* 1) 전체 공매 수 */
+      COUNT(*) AS totalCount,
+
+      /* 
+        2) 오늘 마감되는 공매 수
+        - bid_end_at의 '날짜 부분'이 오늘(CURRENT_DATE)과 같은 경우만 카운트
+      */
+      SUM(
+        CASE 
+          WHEN DATE(bid_end_at) = CURRENT_DATE THEN 1
+          ELSE 0
+        END
+      ) AS closingToday,
+
+      /* 
+        3) 이번 주에 마감되는 공매 수
+        - YEARWEEK(날짜, 1): ISO 주차(월~일 기준)
+        - bid_end_at가 '이번 주'에 속하면 카운트
+      */
+      SUM(
+        CASE 
+          WHEN YEARWEEK(bid_end_at, 1) = YEARWEEK(CURRENT_DATE, 1) THEN 1
+          ELSE 0
+        END
+      ) AS closingThisWeek,
+
+      /*
+        4) 평균 최저입찰가
+        - min_bid_price NULL은 자동으로 제외되고 평균 계산됨
+      */
+      AVG(min_bid_price) AS avgMinBid,
+
+      /*
+        5) 가장 물건이 많이 몰린 지역 (시/도 수준)
+           - addr_lot에서 정규표현식으로 '첫 번째 공백 전까지'를 잘라서 region 컬럼으로 사용
+             예) '서울특별시 종로구 ...' → '서울특별시'
+                 '경기도 성남시 ...'   → '경기도'
+           - region별로 COUNT(*) 그룹핑 후 가장 큰 값 1개만 선택
+      */
+      (
+        SELECT region
+        FROM (
+          SELECT
+            REGEXP_SUBSTR(addr_lot, '^[^ ]+') AS region,  -- 주소 맨 앞 단어(시/도)
+            COUNT(*) AS cnt                              -- 해당 region에 속한 물건 수
+          FROM item_current
+          WHERE addr_lot IS NOT NULL
+            AND addr_lot &lt;&gt; ''
+          GROUP BY region
+          ORDER BY cnt DESC
+          LIMIT 1
+        ) t
+      ) AS topRegion,
+
+      /*
+        6) topRegion에 해당하는 물건 개수
+           - 위에서 구한 최다 region을 한 번 더 사용해서,
+             그 region에 속한 item_current 레코드 개수를 다시 COUNT
+      */
+      (
+        SELECT COUNT(*)
+        FROM item_current
+        WHERE REGEXP_SUBSTR(addr_lot, '^[^ ]+') = (
+          SELECT region
+          FROM (
+            SELECT
+              REGEXP_SUBSTR(addr_lot, '^[^ ]+') AS region,
+              COUNT(*) AS cnt
+            FROM item_current
+            WHERE addr_lot IS NOT NULL
+              AND addr_lot &lt;&gt; ''
+            GROUP BY region
+            ORDER BY cnt DESC
+            LIMIT 1
+          ) t2
+        )
+      ) AS topRegionCount
+
+    FROM item_current
+  </select>
+
+</mapper>
+

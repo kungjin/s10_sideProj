@@ -45,13 +45,13 @@ public class PublicDataController {
      * ========================================= */
     @GetMapping(value = "/auctions", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> auctions(
-            @RequestParam(defaultValue = "1") int pageNo,
-            @RequestParam(defaultValue = "12") int numOfRows,
-            @RequestParam(defaultValue = "0001") String DPSL_MTD_CD,
-            @RequestParam(required = false) String PBCT_BEGN_DTM,
-            @RequestParam(required = false) String PBCT_CLS_DTM,
-            @RequestParam(required = false) String q,
-            @RequestParam Map<String, String> extra
+    		 @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+             @RequestParam(name = "numOfRows", defaultValue = "12") int numOfRows,
+             @RequestParam(name = "DPSL_MTD_CD", defaultValue = "0001") String DPSL_MTD_CD,
+             @RequestParam(name = "PBCT_BEGN_DTM", required = false) String PBCT_BEGN_DTM,
+             @RequestParam(name = "PBCT_CLS_DTM", required = false) String PBCT_CLS_DTM,
+             @RequestParam(name = "q", required = false) String q,
+             @RequestParam Map<String, String> extra      // ← 이건 이름 안 붙여도 됨 (전체 파라미터 Map)
     ) {
         final String xml = proxyCallForXml(pageNo, numOfRows, DPSL_MTD_CD, PBCT_BEGN_DTM, PBCT_CLS_DTM, extra);
         if (xml == null || xml.isBlank()) {
@@ -134,13 +134,13 @@ public class PublicDataController {
      * ====================== */
     @GetMapping(value = "/auctions/{pbctNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> auctionDetail(
-            @PathVariable String pbctNo,
-            @RequestParam(defaultValue = "1") int pageNo,
-            @RequestParam(defaultValue = "50") int numOfRows,
-            @RequestParam(defaultValue = "0001") String DPSL_MTD_CD,
-            @RequestParam(required = false) String PBCT_BEGN_DTM,
-            @RequestParam(required = false) String PBCT_CLS_DTM,
-            @RequestParam Map<String, String> extra
+    	      @PathVariable("pbctNo") String pbctNo,
+              @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+              @RequestParam(name = "numOfRows", defaultValue = "50") int numOfRows,
+              @RequestParam(name = "DPSL_MTD_CD", defaultValue = "0001") String DPSL_MTD_CD,
+              @RequestParam(name = "PBCT_BEGN_DTM", required = false) String PBCT_BEGN_DTM,
+              @RequestParam(name = "PBCT_CLS_DTM", required = false) String PBCT_CLS_DTM,
+              @RequestParam Map<String, String> extra
     ) {
         String xml = proxyCallForXml(pageNo, numOfRows, DPSL_MTD_CD, PBCT_BEGN_DTM, PBCT_CLS_DTM, extra);
         String json = com.of.util.XmlJsonConverter.xmlStringToJsonString(xml);

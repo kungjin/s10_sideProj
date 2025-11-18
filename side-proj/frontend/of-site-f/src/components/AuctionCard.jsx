@@ -1,57 +1,39 @@
 // src/components/AuctionCard.jsx
 import { Link } from "react-router-dom";
 import Card from "./Card";
-import Badge from "./Badge";
 import { parseOnbidDate } from "../utils/onbid";
 
 const fmtKrw = new Intl.NumberFormat("ko-KR");
 
+// 썸네일 placeholder
 function getFakeThumbnail(item) {
-  // 1) 실제 이미지가 있으면 그것 사용
   if (item?.thumbnail) return item.thumbnail;
 
-  // 2) 아이템별 랜덤 색상 박스 (stable hash)
-  const palette = [
-    "#dbeafe", // light blue
-    "#ffe4e6", // rose
-    "#fef9c3", // yellow
-    "#dcfce7", // green
-    "#fae8ff", // purple
-  ];
-
+  const palette = ["#dbeafe", "#ffe4e6", "#fef9c3", "#dcfce7", "#fae8ff"];
   const idx = (item?.itemNo ?? 0) % palette.length;
 
-  // 3) SVG placeholder
   return `data:image/svg+xml;utf8,
-<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450">
   <rect width="100%" height="100%" fill="${palette[idx]}" />
-  <text x="50%" y="50%" font-size="14" text-anchor="middle" fill="#555" dy="5">
+  <text x="50%" y="50%" font-size="32" text-anchor="middle" fill="#555" dy="10">
     OF
   </text>
 </svg>`;
 }
 
+// 마감일 Date 통일 (정규화된 endDate 있으면 그거 우선)
 function toSafeDate(item) {
   if (!item) return null;
 
-  // 1) 타임스탬프(ms)
-  if (item.endTs) {
-    const d = new Date(item.endTs);
-    if (!isNaN(d.getTime())) return d;
+  if (item.endDate instanceof Date && !isNaN(item.endDate.getTime())) {
+    return item.endDate;
   }
 
-  // 2) Date 객체
-  if (item.endDate instanceof Date) {
-    if (!isNaN(item.endDate.getTime())) return item.endDate;
-  }
-
-  // 3) ISO 문자열
   if (item.endDateISO) {
     const d = new Date(item.endDateISO);
     if (!isNaN(d.getTime())) return d;
   }
 
-  // 4) 백엔드가 문자열로만 내려주는 경우 (DB DATETIME / 온비드 포맷)
   if (item.bidEndAt) {
     const d = parseOnbidDate(item.bidEndAt);
     if (d) return d;
@@ -64,12 +46,12 @@ function toSafeDate(item) {
   return null;
 }
 
+// “n일 n시간 남음”
 function remainText(item) {
   const d = toSafeDate(item);
   if (!d) return null;
 
-  const t = d.getTime();
-  const diff = t - Date.now();
+  const diff = d.getTime() - Date.now();
   if (diff <= 0) return "마감";
 
   const dayMs = 24 * 60 * 60 * 1000;
@@ -80,95 +62,80 @@ function remainText(item) {
   return dCnt > 0 ? `${dCnt}일 ${hCnt}시간 남음` : `${hCnt}시간 남음`;
 }
 
-export default function AuctionCard({
-  item,
-  variant = "default", // "default" | "deadline"
-  className = "",
-}) {
+export default function AuctionCard({ item, className = "" }) {
   const end = toSafeDate(item);
   const endLabel = end
     ? `${end.toLocaleDateString("ko-KR")} 마감`
     : "마감일 정보 없음";
 
-  // 🔹 가격: 여러 필드 중 하나라도 있으면 사용
-  const rawPrice =
-    item?.minPrice ??
-    item?.minBid ?? // Auctions.jsx에서 만든 값이 있으면 우선
-    item?.minBidPrice ??
-    item?.min_bid_price ??
-    0;
-
-  const price = Number(rawPrice || 0);
-  const priceLabel = price > 0 ? `${fmtKrw.format(price)}원` : "정보 없음";
+  // 정규화된 값들 사용 (normalizeAuctionItem 기준)
+  const priceNum = Number(item?.minBid ?? 0);
+  const priceLabel =
+    priceNum > 0 ? `${fmtKrw.format(priceNum)}원` : "정보 없음";
 
   const remain = remainText(item);
-  const isDeadline = variant === "deadline";
-
   const category = item?.category ?? item?.usageName ?? "-";
-  const address = item?.address ?? item?.addrRoad;
-
+  const address = item?.address ?? item?.addrRoad ?? "";
   const thumbnail = getFakeThumbnail(item);
 
+  const id = item?.id ?? `${item?.noticeNo ?? ""}-${item?.itemNo ?? ""}`;
+
   return (
-    <Card
-      className={[
-        "w-full",
-        isDeadline ? "border border-red-200 bg-red-50/40" : "",
-        className,
-      ].join(" ")}
-    >
-        {/* 🔹 썸네일 */}
-      <div className="flex-shrink-0 mb-3 md:mb-0">
-        <img
-          src={thumbnail}
-          alt="thumbnail"
-          className="w-auto h-50 rounded-lg object-cover bg-gray-100"
-        />
-      </div>
-       {/* 🔹 메인 내용 */}
-      <div className="flex items-start justify-between gap-4 mt-3">
-        <div className="min-w-0">
-          <Link
-            to={`/auctions/${item?.id}`}
-            className={`text-lg font-semibold hover:underline line-clamp-2 ${
-              isDeadline ? "text-red-700" : ""
-            }`}
-            title={item?.title}
-          >
-            {item?.title ?? "(제목 없음)"}
-          </Link>
-          <div
-            className={`mt-1 text-sm ${
-              isDeadline ? "text-red-600/80" : "text-subink"
-            }`}
-          >
-            {category}
-          </div>
-          {address && !isDeadline && (
-            <div className="mt-1 text-xs text-subink line-clamp-1">
-              {address}
-            </div>
-          )}
+    <Link to={`/auctions/${id}`} className="block h-full">
+      <Card className={["h-full flex flex-col", className].join(" ")}>
+        {/* 1) 썸네일: 가로 꽉 + 비율 고정 */}
+        <div className="w-full mb-3 overflow-hidden rounded-card">
+          <img
+            src={thumbnail}
+            alt="thumbnail"
+            className="w-full aspect-video object-cover bg-gray-100"
+          />
         </div>
 
-        <Badge tone={isDeadline ? "danger" : "info"}>{endLabel}</Badge>
-      </div>
+        {/* 2) 본문 영역 */}
+        <div className="flex-1 flex flex-col gap-2">
+          <div className="relative">
+            {/* 오른쪽 상단 마감일 텍스트 */}
+            <div className="min-w-[110px] text-right text-sm text-primary/70">
+              {endLabel}
+            </div>
 
-      <div className="mt-4 text-sm flex items-center gap-3">
-        <span>최저입찰가</span>
-        <span
-          className={`font-semibold ${
-            isDeadline ? "text-red-700" : ""
-          }`}
-        >
-          {priceLabel}
-        </span>
-        {isDeadline && remain && (
-          <span className="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-medium">
-            ⏳ {remain}
-          </span>
-        )}
-      </div>
-    </Card>
+            {/* 텍스트 블록 (마감일 공간은 위, 제목은 아래에서 시작) */}
+            <div>
+              <div
+                className="text-primary text-base md:text-lg font-semibold line-clamp-2 mt-3 min-h-14"
+                title={item?.title}
+              >
+                {item?.title ?? "(제목 없음)"}
+              </div>
+
+              <div className="mt-1 text-sm text-primary/90 min-h-5">
+                {category}
+              </div>
+
+              {address && (
+                <div className="mt-1 text-xs text-subink/70 line-clamp-1 min-h-4">
+                  {address}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 아래 최저입찰가 + 남은시간 */}
+          <div className="mt-auto pt-3 border-t border-line flex items-center justify-between text-sm">
+            <div>
+              <div className="text-xs text-subink">최저입찰가</div>
+              <div className="font-semibold text-primary">{priceLabel}</div>
+            </div>
+
+            {remain && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                ⏳ {remain}
+              </span>
+            )}
+          </div>
+        </div>
+      </Card>
+    </Link>
   );
 }

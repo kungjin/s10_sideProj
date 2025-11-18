@@ -25,8 +25,8 @@ public class PublicController {
      */
     @GetMapping("/ingest")
     public Map<String, Object> ingestOnce(
-            @RequestParam(defaultValue = "1") int pageNo,
-            @RequestParam(defaultValue = "50") int numOfRows
+    		@RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+            @RequestParam(name = "numOfRows", defaultValue = "50") int numOfRows
     ) {
         Map<String, String> params = Map.of(
                 "pageNo", String.valueOf(pageNo),
@@ -38,8 +38,10 @@ public class PublicController {
 
         int inserted = ingestService.ingestOnce(params);  // ← 여기서 upsert 수행
         return Map.of(
-                "result", "success",
-                "inserted", inserted
+        		"result", "success",
+                "inserted", inserted,
+                "pageNo", pageNo,
+                "numOfRows", numOfRows
         );
     }
 
@@ -48,13 +50,15 @@ public class PublicController {
      */
     @PostMapping("/ingest/bulk")
     public Map<String, Object> ingestBulk(
-            @RequestParam(defaultValue = "1") int startPage,
-            @RequestParam(defaultValue = "3") int endPage
+    	      @RequestParam(name = "startPage", defaultValue = "1") int startPage,
+              @RequestParam(name = "endPage", defaultValue = "3") int endPage
     ) {
         int total = ingestService.ingestMany(startPage, endPage);
         return Map.of(
-                "result", "success",
-                "rows", total
+        		  "result", "success",
+                  "rows", total,
+                  "startPage", startPage,
+                  "endPage", endPage
         );
     }
 }

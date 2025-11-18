@@ -2,28 +2,21 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import Feature from "../components/Feature";
-import Badge from "../components/Badge";
-import Button from "../components/Button.jsx";
 import Section from "../components/Section";
 import Stat from "../components/Stat";
 import SearchBar from "../components/SearchBar";
 import { getAuctions } from "../api/auctions";
-import { parseOnbidDate } from "../utils/onbid";
-
-// 🔹 상수: 3일(밀리초)
-const THREE_DAYS = 1000 * 60 * 60 * 24 * 3;
-
-// 작은 유틸
-const fmtPrice = (n) => n?.toLocaleString?.("ko-KR") + "원";
-const fmtDate = (d) =>
-  d instanceof Date ? d.toLocaleDateString("ko-KR") : "-";
+import { normalizeAuctionItem } from "../utils/auctionNormalize.js";
+import AuctionCard from "../components/AuctionCard.jsx";
+import { getStatsSummary } from "../api/Stats.js";
 
 export default function Home() {
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [stats, setStats] = useState(null);
 
-  // 🔹 검색 관련 기본값 (홈에서는 초기값만 있음)
+  // 🔹 홈에서의 기본 검색값
   const q = "";
   const deadlineOnly = false;
 
@@ -35,26 +28,45 @@ export default function Home() {
     navigate(`/auctions?${sp.toString()}`);
   };
 
+  // 🔹 히어로 오른쪽 추천 키워드 클릭
+  const handleQuickKeyword = (kw) => {
+    handleSearchSubmit(kw, false);
+  };
+
   // 🔹 공매 데이터 가져와서: 날짜 정규화 → 마감 임박 순 정렬 → 상위 3개만 recent에 저장
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
-        const list = await getAuctions(); // 원본 데이터 배열
+        // 백엔드에서 마감일 기준으로 준다면 sort 파라미터도 줄 수 있음
+        const raw = await getAuctions({ limit: 50, sort: "deadline" });
 
-        // 1) 날짜 정규화: bidEndAt / endDate → endDate(Date 객체)로 통일
-        const normalized = list.map((v) => ({
-          ...v,
-          endDate: parseOnbidDate(v.bidEndAt ?? v.endDate),
-        }));
+        // 1) 공통 정규화
+        const normalized = (raw || []).map((item, idx) =>
+          normalizeAuctionItem(item, idx)
+        );
 
-        // 2) endDate 있는 것만, 마감일 가까운 순으로 정렬
+        // 2) endDate 있는 것만, 마감일 가까운 순
         const sorted = normalized
           .filter((v) => v.endDate instanceof Date)
           .sort((a, b) => a.endDate - b.endDate);
 
-        // 3) 상위 3개만 사용 (마감 임박 3개)
-        setRecent(sorted.slice(0, 3));
+        // 3) 상위 3개만 사용 (마감 임박 3개) + id/uid 세팅
+        const top3 = sorted.slice(0, 3).map((it, idx) => {
+          const notice = it.noticeNo ?? it.notice_no;
+          const itemNo = it.itemNo ?? it.item_no;
+
+          const id =
+            it.id ?? (notice && itemNo ? `${notice}-${itemNo}` : `home-${idx}`);
+
+          return {
+            ...it,
+            id,
+            uid: it.uid ?? id,
+          };
+        });
+
+        setRecent(top3);
       } catch (err) {
         console.error(err);
         setRecent([]);
@@ -64,11 +76,32 @@ export default function Home() {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const d = await getStatsSummary();
+        setStats(d);
+      } catch (err) {
+        console.error("통계 API 에러:", err);
+      }
+    })();
+  }, []);
+
+  const {
+    totalCount = 0,
+    closingToday = 0,
+    closingThisWeek = 0,
+    avgMinBid = 0,
+    topRegion = null,
+    topRegionCount = 0,
+  } = stats || {};
+
   return (
     <>
       {/* ===== HERO ===== */}
       <section className="bg-linear-to-b from-white via-white to-sky/10">
         <div className="max-w-6xl mx-auto px-5 pt-16 pb-14 grid lg:grid-cols-2 gap-10 items-center">
+          {/* 왼쪽: 브랜드 메시지 + 검색 */}
           <div className="flex flex-col gap-6">
             <p className="inline-flex items-center gap-2 text-xs border border-line rounded-full px-3 py-1 bg-white w-fit">
               <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
@@ -83,10 +116,9 @@ export default function Home() {
             </h1>
 
             <p className="text-lg text-subink max-w-xl leading-7">
-              객관적인 공공데이터와 개인 맞춤형 탐색을 결합해
-              복잡한 공매 정보를{" "}
+              객관적인 공공데이터와 개인 맞춤형 탐색을 결합해 복잡한 공매 정보를{" "}
               <span className="font-semibold">카드형 UI</span>로 명확하게
-              보여줍니다.
+              보여줍니다. 마감이 임박한 물건부터 한눈에 확인해 보세요.
             </p>
 
             {/* 바로검색 */}
@@ -95,7 +127,7 @@ export default function Home() {
                 initial={q}
                 initialDeadlineOnly={deadlineOnly}
                 onSubmit={handleSearchSubmit}
-                placeholder="주소/물건명 검색"
+                placeholder="주소/물건명으로 검색해 보세요"
               />
               <div className="text-xs text-subink mt-2">
                 예) “화성시 장안면”, “근린생활시설”, “토지/임야”
@@ -111,43 +143,45 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 우측 카드 미리보기 */}
+          {/* 오른쪽: 사용 플로우 + 추천 키워드 */}
           <div className="relative">
             <div className="absolute -inset-4 bg-linear-to-r from-primary/10 to-sky/10 blur-2xl rounded-card -z-10" />
             <div className="grid gap-3">
               <PreviewRow
-                title="주소/물건명으로 빠르게 검색"
-                sub="지역/유형/마감일 필터"
+                step="1"
+                title="주소나 물건명을 입력하세요"
+                sub="궁금한 지역이나 유형을 키워드로 검색합니다."
               />
               <PreviewRow
-                title="카드형 리스트로 핵심만"
-                sub="최저가 · 마감일 · 분류"
+                step="2"
+                title="‘마감 임박’ 토글로 우선순위를 정리"
+                sub="임박한 공매부터 확인해 리스크를 줄일 수 있어요."
               />
               <PreviewRow
-                title="상세 페이지에서 한눈에"
-                sub="감정가 · 보증금 · 면적"
+                step="3"
+                title="카드 한 장씩 비교하며 결정"
+                sub="최저입찰가, 감정가, 분류, 마감일을 한 번에 봅니다."
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== 바로가기 CTA ===== */}
-      <section className="bg-white border-y border-line">
+      {/* ===== 상태/CTA 바 ===== */}
+      <section className="bg-animated-gradient text-white">
         <div className="max-w-6xl mx-auto px-5 py-6 flex flex-wrap items-center gap-3 justify-between">
-          <p className="text-sm text-subink">
-            샘플 데이터를 먼저 둘러보세요. (Onbid API 연동 예정)
+          <p className="text-sm text-white/90">
+            현재는 베타 버전으로, 샘플 데이터 및 일부 공매 정보를 기준으로
+            동작합니다. Onbid API 연동 후 더 많은 물건을 제공할 예정입니다.
           </p>
+
           <div className="flex gap-2">
-            <Link to="/auctions" className="btn btn-primary">
-              공매 탐색 바로가기
-            </Link>
-            <button
-              className="btn btn-ghost"
-              onClick={() => navigate("/auctions?q=%ED%86%A0%EC%A7%80")}
+            <Link
+              to="/auctions"
+              className="btn bg-white text-primary hover:bg-white/90 shadow-subtle"
             >
-              토지/임야 보기
-            </button>
+              공매 리스트 보러가기
+            </Link>
           </div>
         </div>
       </section>
@@ -155,7 +189,7 @@ export default function Home() {
       {/* ===== 특징 3가지 ===== */}
       <Section
         title="OF가 더 편한 이유"
-        subtitle="한 화면에서 핵심만 정리해 빠르게 비교/결정할 수 있습니다."
+        subtitle="한 화면에서 핵심만 정리해 빠르게 비교·결정할 수 있습니다."
         className="py-12"
       >
         <div className="grid md:grid-cols-3 gap-4">
@@ -167,7 +201,7 @@ export default function Home() {
           <Feature
             icon={<BoltIcon />}
             title="마감 임박 우선"
-            desc="일주일 이내 마감 물건만 모아 빠르게 확인할 수 있어요."
+            desc="임박한 공매를 먼저 보여줘 시간과 에너지를 아껴줍니다."
           />
           <Feature
             icon={<ShieldIcon />}
@@ -177,8 +211,12 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ===== 최근 공매 미리보기 ===== */}
-      <Section title="최근 등록 · 마감 임박" className="py-2">
+      {/* ===== 공매 미리보기 ===== */}
+      <Section
+        title="최근 등록 · 마감 임박 공매"
+        subtitle="지금 바로 확인해야 할 공매를 카드형으로 미리 살펴볼 수 있습니다."
+        className="py-2"
+      >
         <div className="grid md:grid-cols-3 gap-4">
           {loading && (
             <>
@@ -193,94 +231,50 @@ export default function Home() {
           )}
 
           {!loading &&
-            recent.map((v, idx) => {
-              // 온비드/스네이크케이스까지 고려한 id 구성
-              const notice = v.noticeNo ?? v.notice_no;
-              const item = v.itemNo ?? v.item_no;
+            recent.map((item) => (
+              <AuctionCard key={item.uid ?? item.id} item={item} />
+            ))}
+        </div>
 
-              // 🔑 key 생성: 온비드 → 예전 mock → idx 순서
-              const base =
-                notice && item
-                  ? `${notice}-${item}` // 온비드 진짜 복합키
-                  : v.id
-                    ? `id-${v.id}` // 예전 mock 데이터용
-                    : "no-id"; // 아무 식별자 없을 때
-
-              const key = `${base}-${idx}`;
-
-              // 🔹 위 useEffect에서 정규화한 Date 객체
-              const endDate = v.endDate;
-
-              // 🔹 최저입찰가 필드 통합
-              const minBid = v.minBidPrice ?? v.minBid;
-
-              // 🔹 상세 페이지 링크도 동일 기준으로 맞추기
-              const detailHref = `/auctions/${v.id ?? idx}`;
-              
-              return (
-                <Card key={key}>
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <Link
-                        to={detailHref}
-                        className="font-semibold hover:underline"
-                      >
-                        {v.title}
-                      </Link>
-                      <div className="text-sm text-subink mt-1">
-                        {v.category ?? v.usageName}
-                      </div>
-                    </div>
-
-                    {endDate && (
-                      <Badge
-                        tone={
-                          endDate - Date.now() < THREE_DAYS
-                            ? "danger"
-                            : "info"
-                        }
-                      >
-                        {fmtDate(endDate)} 마감
-                      </Badge>
-                    )}
-                  </div>
-
-                  {minBid != null && (
-                    <div className="mt-3 text-sm">
-                      최저입찰가{" "}
-                      <span className="font-semibold">
-                        {fmtPrice(minBid)}
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="mt-4 flex gap-2">
-                    <Link
-                      to={detailHref}
-                      className="btn btn-primary flex-1 text-center"
-                    >
-                      상세
-                    </Link>
-                    <Link
-                      to="/auctions"
-                      className="btn btn-ghost flex-1 text-center"
-                    >
-                      더보기
-                    </Link>
-                  </div>
-                </Card>
-              );
-            })}
+        {/* 전체 리스트로 이어지는 글로벌 CTA */}
+        <div className="mt-6 flex justify-center">
+          <Link
+            to="/auctions"
+            className="btn btn-ghost bg-primary text-sm text-white"
+          >
+            더 많은 공매 보기 →
+          </Link>
         </div>
       </Section>
 
       {/* ===== 간단 통계 ===== */}
       <Section className="py-10">
         <div className="grid sm:grid-cols-3 gap-3">
-          <Stat label="금주 마감" value={`${recent.length}건`} />
-          <Stat label="평균 최저가" value="418,000,000원" />
-          <Stat label="연동 예정" value="Onbid API" />
+          <Stat label="전체 공매 수" value={`${totalCount}건`} />
+          <Stat label="오늘 마감" value={`${closingToday}건`} />
+          <Stat label="이번 주 마감" value={`${closingThisWeek}건`} />
         </div>
+
+        <div className="grid sm:grid-cols-2 gap-3 mt-4">
+          <Stat
+            label="평균 최저입찰가"
+            value={
+              avgMinBid
+                ? `${Number(avgMinBid).toLocaleString()}원`
+                : "-"
+            }
+          />
+          <Stat
+            label="가장 많은 물건이 있는 지역"
+            value={
+              topRegion
+                ? `${topRegion} (${topRegionCount}건)`
+                : "지역 데이터 없음"
+            }
+          />
+        </div>
+
+
       </Section>
 
       {/* ===== FAQ 라이트 ===== */}
@@ -289,7 +283,8 @@ export default function Home() {
           <Card className="p-5">
             <h4 className="font-semibold">실제 공매 데이터인가요?</h4>
             <p className="text-sm text-subink mt-2">
-              현재는 샘플 데이터로 동작하며, Onbid API 연동을 준비 중입니다.
+              현재는 샘플 데이터 및 제한된 공매 정보로 동작하며, Onbid API 연동
+              후 점차 범위를 넓혀갈 예정입니다.
             </p>
           </Card>
           <Card className="p-5">
@@ -306,11 +301,18 @@ export default function Home() {
 }
 
 /* ===== 내부 미니 컴포넌트 ===== */
-function PreviewRow({ title, sub }) {
+function PreviewRow({ step, title, sub }) {
   return (
     <div className="card flex items-center justify-between gap-4">
       <div>
-        <div className="font-semibold">{title}</div>
+        <div className="flex items-center gap-2">
+          {step && (
+            <span className="inline-flex items-center justify-center w-6 h-6 text-xs rounded-full bg-primary text-white">
+              {step}
+            </span>
+          )}
+          <div className="font-semibold">{title}</div>
+        </div>
         <div className="text-sm text-subink mt-1">{sub}</div>
       </div>
       <div className="shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -351,3 +353,4 @@ function ShieldIcon() {
     </svg>
   );
 }
+

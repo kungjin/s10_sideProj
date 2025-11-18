@@ -1,8 +1,16 @@
-export default function Badge({ tone="default", children }) {
-  const map = {
-    default: "badge",
-    danger: "badge border-accent bg-accent/10 text-ink",
-    info: "badge border-sky bg-sky/10 text-ink",
-  };
-  return <span className={map[tone] || map.default}>{children}</span>;
+export default function Badge({ tone = "info", className = "", children }) {
+  const toneClass =
+    tone === "info"
+      ? "bg-sky-50 text-sky-700 border-sky-200"
+      : tone === "danger"
+      ? "bg-red-50 text-red-700 border-red-200"
+      : tone === "alert"
+      ? "bg-primary/10 text-primary border-primary/20"
+      : "";
+
+  return (
+    <span className={`badge ${toneClass} ${className}`}>
+      {children}
+    </span>
+  );
 }

@@ -38,11 +38,11 @@ public class TestProxyController {
     // 1) 원문 XML 그대로 보기
     @GetMapping(value = "/xml", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> rawXml(
-            @RequestParam(defaultValue = "1") int pageNo,
-            @RequestParam(defaultValue = "1") int numOfRows,
-            @RequestParam(defaultValue = "0001") String DPSL_MTD_CD,
-            @RequestParam(required = false) String PBCT_BEGN_DTM,
-            @RequestParam(required = false) String PBCT_CLS_DTM,
+            @RequestParam(name = "pageNo",     defaultValue = "1")  int pageNo,
+            @RequestParam(name = "numOfRows",  defaultValue = "1")  int numOfRows,
+            @RequestParam(name = "DPSL_MTD_CD", defaultValue = "0001") String DPSL_MTD_CD,
+            @RequestParam(name = "PBCT_BEGN_DTM", required = false) String PBCT_BEGN_DTM,
+            @RequestParam(name = "PBCT_CLS_DTM",  required = false) String PBCT_CLS_DTM,
             @RequestParam Map<String, String> extra
     ) {
         var uri = buildUri(pageNo, numOfRows, DPSL_MTD_CD, PBCT_BEGN_DTM, PBCT_CLS_DTM, extra);
@@ -61,11 +61,11 @@ public class TestProxyController {
     // 2) XML→JSON 변환 결과 바로 보기
     @GetMapping(value = "/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> rawJson(
-            @RequestParam(defaultValue = "1") int pageNo,
-            @RequestParam(defaultValue = "1") int numOfRows,
-            @RequestParam(defaultValue = "0001") String DPSL_MTD_CD,
-            @RequestParam(required = false) String PBCT_BEGN_DTM,
-            @RequestParam(required = false) String PBCT_CLS_DTM,
+            @RequestParam(name = "pageNo",     defaultValue = "1")  int pageNo,
+            @RequestParam(name = "numOfRows",  defaultValue = "1")  int numOfRows,
+            @RequestParam(name = "DPSL_MTD_CD", defaultValue = "0001") String DPSL_MTD_CD,
+            @RequestParam(name = "PBCT_BEGN_DTM", required = false) String PBCT_BEGN_DTM,
+            @RequestParam(name = "PBCT_CLS_DTM",  required = false) String PBCT_CLS_DTM,
             @RequestParam Map<String, String> extra
     ) {
         var uri = buildUri(pageNo, numOfRows, DPSL_MTD_CD, PBCT_BEGN_DTM, PBCT_CLS_DTM, extra);
@@ -116,3 +116,4 @@ public class TestProxyController {
         return uri;
     }
 }
+

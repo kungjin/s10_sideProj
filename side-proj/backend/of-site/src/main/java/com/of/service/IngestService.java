@@ -119,9 +119,19 @@ public class IngestService {
         dto.setNoticeNo(noticeNo);
         dto.setItemNo(itemNo);
         dto.setTitle(getText(itemNode, "CLTR_NM"));
-        // 도로명/지번 등 혼재하는 경우가 있어 ADDR_RD 없으면 NMRD_ADRS를 보조로 사용
+
+        // 🔹 지번 주소 (LDNM_ADRS) → 없으면 도로명으로 폴백
+        String addrLot = getText(itemNode, "LDNM_ADRS");
+        if (addrLot.isBlank()) {
+            addrLot = getText(itemNode, "NMRD_ADRS");
+        }
+
+        // 🔹 도로명 주소 (NMRD_ADRS) → ADDR_RD / NMRD_ADRS 둘 다 방어
         String addrRoad = getText(itemNode, "ADDR_RD");
-        if (addrRoad.isBlank()) addrRoad = getText(itemNode, "NMRD_ADRS");
+        if (addrRoad.isBlank()) {
+            addrRoad = getText(itemNode, "NMRD_ADRS");
+        }
+
         dto.setAddrRoad(addrRoad);
         dto.setUsageName(getText(itemNode, "CTGR_FULL_NM"));
         dto.setSaleType(getText(itemNode, "DPSL_MTD_CD"));
@@ -139,7 +149,11 @@ public class IngestService {
         it.setNoticeNo(dto.getNoticeNo());
         it.setItemNo(dto.getItemNo());
         it.setTitle(dto.getTitle());
+
+        // 🔹 여기서 Item에 지번 / 도로명 둘 다 넣어주기
+        it.setAddrLot(addrLot);      // ★ 이 줄이 없어서 addr_lot이 계속 NULL이었음
         it.setAddrRoad(dto.getAddrRoad());
+
         it.setUsageName(dto.getUsageName());
         it.setSaleType(("0002".equals(dto.getSaleType()) || "RENT".equalsIgnoreCase(dto.getSaleType())) ? "RENT" : "SALE");
         it.setMinBidPrice(dto.getMinBidPrice());
@@ -150,7 +164,6 @@ public class IngestService {
         it.setFailedCount(dto.getFailedCount());
         it.setViewCount(dto.getViewCount());
         it.setContentHash(sha256(canonical(it)));
-        
         it.setMissingCount(0);
         
         // 4) UPSERT

@@ -31,7 +31,7 @@ public class AuctionController {
             @RequestParam(name = "limit", defaultValue = "50") int limit,
             @RequestParam(name = "q", required = false) String q,
             @RequestParam(name = "deadlineOnly", defaultValue = "false") boolean deadlineOnly,
-            @RequestParam(required = false) String sort
+            @RequestParam(name = "sort", required = false) String sort
     ) {
         return auctionService.findAuctions(limit, q, deadlineOnly, sort);
     }
