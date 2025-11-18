@@ -63,3 +63,8 @@
 2025-11-19T00:34:32.038+09:00  INFO 28780 --- [of-site] [http-nio-8095-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2025-11-19T00:34:32.039+09:00  INFO 28780 --- [of-site] [http-nio-8095-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2025-11-19T06:54:23.756+09:00  WARN 28780 --- [of-site] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h40m781ms12µs100ns).
+2025-11-19T08:34:55.327+09:00  INFO 28780 --- [of-site] [RMI TCP Connection(332)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-11-19T08:34:55.333+09:00  INFO 28780 --- [of-site] [RMI TCP Connection(332)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-19T08:34:55.339+09:00  INFO 28780 --- [of-site] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-19T08:34:55.368+09:00  INFO 28780 --- [of-site] [RMI TCP Connection(332)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-19T08:34:55.372+09:00  INFO 28780 --- [of-site] [RMI TCP Connection(332)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
